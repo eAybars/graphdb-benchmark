@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: orientdb
+  labels:
+    app: orientdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: orientdb
+    spec:
+      containers:
+      - name: orientdb
+        image: orientdb:3.0.0RC1
+        env:
+        - name: ORIENTDB_ROOT_PASSWORD
+          value: orientdb
+        ports:
+        - containerPort: 2424
+          name: binary
+        - containerPort: 2480
+          name: http
+        volumeMounts:
+        - name: orient-storage
+          mountPath: /orientdb/databases
+      volumes:
+          - hostPath:
+              path: "/tmp/orientdata"
+              type: DirectoryOrCreate
+            name: orient-storage

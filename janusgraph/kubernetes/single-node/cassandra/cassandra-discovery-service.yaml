@@ -1,0 +1,11 @@
+kind: Service
+metadata:
+  labels:
+    app: cassandra
+  name: cassandra-discovery
+spec:
+  clusterIP: None
+  ports:
+    - port: 9042
+  selector:
+    app: cassandra
