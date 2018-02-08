@@ -1,8 +1,10 @@
 FROM jboss/base-jdk:8
 
+USER root
 
-RUN curl -Lo /opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Kindle_Store_5.json.gz
+RUN mkdir /opt/graphdb-benchmark/ && curl -Lo /opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz http://snap.stanford.edu/data/amazon/productGr$
 
+USER jboss
 ENTRYPOINT ["java", "-jar", "/opt/graphdb-benchmark/benchmark-jar-with-dependencies.jar"]
 
 ARG APP_PATH
