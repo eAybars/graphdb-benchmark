@@ -3,20 +3,13 @@ This is a study of performance comparison for various graph databases.
 
 ## Tested databases:
 * [Janusgraph](https://github.com/JanusGraph/janusgraph)  V: [0.2.0](https://github.com/JanusGraph/janusgraph/releases)
-    * Cassandra backend [^1]
-    * Elasticsearch indexing [^2]
+    * Cassandra backend <sup>[1](#F1)</sup>
+    * Elasticsearch indexing <sup>[2](#F2)</sup>
 * [OrientDB](https://github.com/orientechnologies/orientdb) V: 3.0.0RC1
 
-[^1]: Kubernetes deployments based on [BM/Scalable-Cassandra-deployment-on-Kubernetes](https://github.com/IBM/Scalable-Cassandra-deployment-on-Kubernetes)
-
-[^2]: Kubernetes deployments based on [pires/kubernetes-elasticsearch-cluster](https://github.com/pires/kubernetes-elasticsearch-cluster)
-
 ## Test Data
-[Amazon product review data](http://jmcauley.ucsd.edu/data/amazon/) is used in this study. Specifically: [5 core Kindle Store](http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Kindle_Store_5.json.gz)[^3]
+[Amazon product review data](http://jmcauley.ucsd.edu/data/amazon/) is used in this study. Specifically: [5 core Kindle Store](http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Kindle_Store_5.json.gz) <sup>[3](#F3)</sup>
 
-[^3]: Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering
-      R. He, J. McAuley
-      WWW, 2016
 
 ## Test System
 ### Hardware
@@ -47,4 +40,11 @@ This is a study of performance comparison for various graph databases.
 
 ## Progress
 I will share my findings here as I discover them. Any contribution is welcome :)
+
+### Notes
+* <a name="F1">[1]</a>: Kubernetes deployments based on [BM/Scalable-Cassandra-deployment-on-Kubernetes](https://github.com/IBM/Scalable-Cassandra-deployment-on-Kubernetes)
+* <a name="F2">[2]</a>: Kubernetes deployments based on [pires/kubernetes-elasticsearch-cluster](https://github.com/pires/kubernetes-elasticsearch-cluster)
+* <a name="F3">[3]</a>: Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering
+                            R. He, J. McAuley
+                            WWW, 2016
 

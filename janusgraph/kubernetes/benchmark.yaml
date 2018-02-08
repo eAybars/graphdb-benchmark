@@ -15,4 +15,4 @@ spec:
       - name: janusgraph-benchmark
         image: eaybars/janusgraph-benchmark
         imagePullPolicy: IfNotPresent
-        args: ["insert""]
+        args: ["insert", "-q"]

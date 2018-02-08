@@ -15,7 +15,7 @@ import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.*;
 public class MostPopularRecentlyReviewedProducts implements BiConsumer<Set<String>, GraphTraversalSource> {
     @Override
     public void accept(Set<String> args, GraphTraversalSource g) {
-        if (args.stream().noneMatch(s -> s.matches("-q=.*pr.*"))) {
+        if (!args.contains("-q") && args.stream().noneMatch(s -> s.matches("-q=.*pr.*"))) {
             return;
         }
 

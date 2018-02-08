@@ -8,4 +8,3 @@ ENTRYPOINT ["java", "-jar", "/opt/graphdb-benchmark/benchmark-jar-with-dependenc
 ARG APP_PATH
 
 ADD $APP_PATH/target/benchmark-jar-with-dependencies.jar /opt/benchmark/
-

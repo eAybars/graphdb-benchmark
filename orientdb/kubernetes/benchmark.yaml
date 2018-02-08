@@ -15,4 +15,4 @@ spec:
       - name: orientdb-benchmark
         image: eaybars/orientdb-benchmark
         imagePullPolicy: IfNotPresent
-        args: ["insert"]
+        args: ["insert", "-q"]

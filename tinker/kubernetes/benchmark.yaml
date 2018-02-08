@@ -13,6 +13,6 @@ spec:
       restartPolicy: Never
       containers:
       - name: orientdb-benchmark
-        image: eaybars/orientdb-benchmark
+        image: eaybars/tinker-benchmark
         imagePullPolicy: IfNotPresent
         args: ["insert", "-q"]
