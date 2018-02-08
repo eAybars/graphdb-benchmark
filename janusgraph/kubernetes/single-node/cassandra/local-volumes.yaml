@@ -11,5 +11,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /tmp/data/cassandra-data-1
+    path: /tmp/cassandra/cassandra-data-1
   persistentVolumeReclaimPolicy: Recycle

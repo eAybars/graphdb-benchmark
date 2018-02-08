@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /tmp/data/cassandra-data-1
+    path: /tmp/cassandra/cassandra-data-1
   persistentVolumeReclaimPolicy: Recycle
 ---
 apiVersion: v1
@@ -27,7 +27,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /tmp/data/cassandra-data-2
+    path: /tmp/cassandra/cassandra-data-2
   persistentVolumeReclaimPolicy: Recycle
 ---
 apiVersion: v1
@@ -43,5 +43,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /tmp/data/cassandra-data-3
+    path: /tmp/cassandra/cassandra-data-3
   persistentVolumeReclaimPolicy: Recycle
