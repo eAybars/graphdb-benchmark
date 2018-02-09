@@ -6,6 +6,8 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 import javax.json.Json;
 import javax.json.JsonObject;
 import java.io.*;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -16,6 +18,8 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
     private int count;
     private int sampleInterval;
     private int commitInterval;
+
+    private NumberFormat format = NumberFormat.getInstance(Locale.US);
 
     @Override
     public void accept(Set<String> args, GraphTraversalSource g) {
@@ -29,7 +33,7 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
             int count = 0;
             int prevCount = 0;
             System.out.println("Start time: " + start);
-            System.out.println("Quantity\tTime\tRate");
+            System.out.println("Quantity\tTime\tRate/Sec");
             while ((line = reader.readLine()) != null && count < this.count) {
                 count++;
                 JsonObject object = Json.createReader(new StringReader(line)).readObject();
@@ -64,7 +68,7 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
 
                 if (count % sampleInterval == 0) {
                     long time = System.currentTimeMillis();
-                    System.out.println(count + "\t" + time + "\t" + ((count - prevCount) / (double) (time - prevTime)));
+                    System.out.println(count + "\t" + time + "\t" + format.format((count - prevCount) / (double) (time - prevTime) * 1000.0));
                     prevTime = time;
                     prevCount = count;
                 }
@@ -84,7 +88,7 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
 
             if (count % sampleInterval != 0) {
                 long time = System.currentTimeMillis();
-                System.out.println(count + "\t" + time + "\t" + ((count - prevCount) / (double) (time - prevTime)));
+                System.out.println(count + "\t" + time + "\t" + format.format((count - prevCount) / (double) (time - prevTime) * 1000.0));
             }
 
             System.out.println("Total Time: " + (System.currentTimeMillis() - start));
