@@ -28,10 +28,10 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
         }
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(file))))) {
             String line;
-            long start = System.currentTimeMillis();
-            long prevTime = 0;
             int count = 0;
             int prevCount = 0;
+            long start = System.currentTimeMillis();
+            long prevTime = start;
             System.out.println("Start time: " + start);
             System.out.println("Quantity\tTime\tRate/Sec");
             while ((line = reader.readLine()) != null && count < this.count) {
