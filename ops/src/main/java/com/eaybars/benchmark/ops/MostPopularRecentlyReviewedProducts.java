@@ -32,7 +32,7 @@ public class MostPopularRecentlyReviewedProducts implements BiConsumer<Set<Strin
 
 
         List<Vertex> list = g.V().hasLabel("review")
-                .has("unixReviewTime", P.gt(0))
+                .has("unixReviewTime", P.gt(recently))
                 .out("about")
                 .dedup()
                 .order().by(inE("about").count(), Order.decr)

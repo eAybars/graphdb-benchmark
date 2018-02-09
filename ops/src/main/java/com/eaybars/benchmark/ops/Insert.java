@@ -14,6 +14,8 @@ import java.util.zip.GZIPInputStream;
 public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
     private File file;
     private int count;
+    private int sampleInterval;
+    private int commitInterval;
 
     @Override
     public void accept(Set<String> args, GraphTraversalSource g) {
@@ -23,8 +25,11 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(file))))) {
             String line;
             long start = System.currentTimeMillis();
-            System.out.println("Start time: " + start);
+            long prevTime = 0;
             int count = 0;
+            int prevCount = 0;
+            System.out.println("Start time: " + start);
+            System.out.println("Quantity\tTime\tRate");
             while ((line = reader.readLine()) != null && count < this.count) {
                 count++;
                 JsonObject object = Json.createReader(new StringReader(line)).readObject();
@@ -57,11 +62,14 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
                 user.addEdge("created", review, "unixReviewTime", object.getJsonNumber("unixReviewTime").longValue());
                 review.addEdge("about", product);
 
-                if (count % 10000 == 0) {
-                    System.out.println((System.currentTimeMillis() - start) + " Total inserted: " + count);
+                if (count % sampleInterval == 0) {
+                    long time = System.currentTimeMillis();
+                    System.out.println(count + "\t" + time + "\t" + ((count - prevCount) / (double) (time - prevTime)));
+                    prevTime = time;
+                    prevCount = count;
                 }
 
-                if (count % 20 == 0) {
+                if (commitInterval == 1 || count % commitInterval == 0) {
                     try {
                         g.getGraph().tx().commit();
                     } catch (Exception e) {
@@ -74,8 +82,11 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
             } catch (Exception e) {
             }
 
+            if (count % sampleInterval != 0) {
+                long time = System.currentTimeMillis();
+                System.out.println(count + "\t" + time + "\t" + ((count - prevCount) / (double) (time - prevTime)));
+            }
 
-            System.out.println((System.currentTimeMillis() - start) + " Total inserted: " + count);
             System.out.println("Total Time: " + (System.currentTimeMillis() - start));
         } catch (IOException e) {
             System.out.println("Insert failed: ");
@@ -90,6 +101,18 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
                     .map(File::new)
                     .filter(File::exists)
                     .findFirst().orElse(new File("reviews_Kindle_Store_5.json.gz"));
+            sampleInterval = args.stream()
+                    .filter(s -> s.matches("s[0-9]+"))
+                    .map(s -> s.substring(1))
+                    .map(Integer::parseInt)
+                    .findFirst()
+                    .orElse(10000);
+            commitInterval = args.stream()
+                    .filter(s -> s.matches("c[0-9]+"))
+                    .map(s -> s.substring(1))
+                    .map(Integer::parseInt)
+                    .findFirst()
+                    .orElse(20);
             if (!file.exists()) {
                 System.out.println("Insert file not found: " + file);
                 return false;
@@ -107,4 +130,5 @@ public class Insert implements BiConsumer<Set<String>, GraphTraversalSource> {
             return 0;
         }
     }
+
 }
