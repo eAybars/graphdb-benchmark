@@ -15,4 +15,4 @@ spec:
       - name: janusgraph-benchmark
         image: eaybars/janusgraph-benchmark
         imagePullPolicy: IfNotPresent
-        args: ["insert", "-q"]
+        args: ["-insert.commit=20", "-q.mrrt=1", "-q.rpp=1"]

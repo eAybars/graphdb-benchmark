@@ -1,15 +1,12 @@
 package com.eaybars.benchmark;
 
 import com.eaybars.benchmark.insert.Insert;
-import com.eaybars.benchmark.insert.InsertBenchmark;
+import com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark;
 import com.eaybars.benchmark.query.MostRecentReviewTime;
 import com.eaybars.benchmark.query.RecentPopularProducts;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+import javax.naming.spi.NamingManager;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -24,13 +21,12 @@ public class ExecutorDelegation {
     }
 
     public void run() throws Exception {
-        if (extract("-insert.", s -> true, false)) {
-            Insert.using(GRAPH_SUPPLIER_CLASS)
-                    .insertCount(extract("-insert.count=", Integer::parseInt, -1))
-                    .measurementBatchSize(extract("-insert.measurementBatch=", Integer::parseInt, 1000))
-                    .commitInterval(extract("-insert.commit=", Integer::parseInt, 20))
-                    .reviewsFile(extract("-insert.review_file=", Function.identity(), "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"))
-                    .run();
+        if (extract("-insert.review", s -> true, false)) {
+            Insert.fromFile(extract("-insert.review.file=", Function.identity(), "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"))
+                    .insertCount(extract("-insert.review.count=", Integer::parseInt, -1))
+                    .measurementBatchSize(extract("-insert.review.measurementBatch=", Integer::parseInt, 1000))
+                    .commitInterval(extract("-insert.review.commit=", Integer::parseInt, 20))
+                    .run(ReviewsInsertBenchmark.class);
         }
 
         int times = extract("-q.mrrt=", Integer::parseInt, 0);

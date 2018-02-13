@@ -1,86 +1,97 @@
 package com.eaybars.benchmark.insert;
 
-import com.eaybars.benchmark.GraphSupplier;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import com.eaybars.benchmark.Information;
 import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import java.io.*;
-import java.util.function.Supplier;
+import java.io.IOException;
+import java.io.Serializable;
 
-public class Insert {
+public class Insert implements Serializable {
+    private InsertSource source;
+    private int commitInterval;
     private int measurementBatchSize;
     private int insertCount;
 
-    private int maxInsertCount;
+    private boolean sealed;
 
-    public static Insert using(Class<? extends Supplier<GraphTraversalSource>> graphSupplierType) {
-        System.setProperty(GraphSupplier.GRAPH_SUPPLIER_CLASS_PROPERTY, graphSupplierType.getName());
-        return new Insert();
-    }
-
-    public Insert reviewsFile(String file) {
-        File target = new File(file);
-        if (target.exists()) {
-            System.setProperty(InsertState.REVIEW_FILE_PROPERTY, target.getAbsolutePath());
-            try (InputStream is = new BufferedInputStream(new FileInputStream(target))) {
-                byte[] c = new byte[1024];
-                int readChars;
-                boolean charsAfterNewLine = false;
-                while ((readChars = is.read(c)) != -1) {
-                    charsAfterNewLine = true;
-                    for (int i = 0; i < readChars; ++i) {
-                        if (c[i] == '\n') {
-                            charsAfterNewLine = false;
-                            maxInsertCount++;
-                        }
-                    }
-                }
-                if (charsAfterNewLine) {
-                    maxInsertCount++;
-                }
-
-            } catch (IOException e) {
-                maxInsertCount = 900_000;
+    public static Insert fromFile(String file) {
+        Insert insert = new Insert();
+        try {
+            insert.source = InsertSource.from(file);
+            if (!insert.source.exists()) {
+                throw new IllegalArgumentException("Review file not found: " + file);
+            } else if (insert.source.getNumberOfLines() == 0) {
+                throw new IllegalArgumentException("Review file is empty: " + file);
             }
-        } else {
-            throw new IllegalArgumentException("Review file not found: " + file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return this;
+        return insert;
     }
 
     public Insert commitInterval(int interval) {
-        System.setProperty(InsertState.COMMIT_INTERVAL_PROPERTY, String.valueOf(interval));
+        if (sealed) {
+            throw new IllegalStateException();
+        }
+        this.commitInterval = interval;
         return this;
     }
 
     public Insert measurementBatchSize(int measurementBatchSize) {
+        if (sealed) {
+            throw new IllegalStateException();
+        }
         this.measurementBatchSize = measurementBatchSize;
         return this;
     }
 
     public Insert insertCount(int insertCount) {
+        if (sealed) {
+            throw new IllegalStateException();
+        }
         this.insertCount = insertCount;
         return this;
     }
 
-    public void run() throws RunnerException {
-        if (maxInsertCount == 0) {
-            throw new IllegalStateException("Review source file is not set");
+    public static Insert currentFor(Class<?> benchmarkClass) {
+        try {
+            return Information.SOURCE.load(Insert.class, benchmarkClass.getName());
+        } catch (IOException e) {
+            return null;
         }
+    }
 
+    public InsertSource getSource() {
+        return source;
+    }
+
+    public int getCommitInterval() {
+        return commitInterval;
+    }
+
+    public int getMeasurementBatchSize() {
+        return measurementBatchSize;
+    }
+
+    public int getInsertCount() {
+        return insertCount;
+    }
+
+    public void run(Class<?> benchmarkClass) throws Exception {
         if (insertCount < 0) {
-            insertCount = maxInsertCount;
+            insertCount = source.getNumberOfLines();
         }
 
-        int iterationCount = (int) Math.ceil(insertCount * 1.0/measurementBatchSize);
-        if (iterationCount > maxInsertCount) {
-            iterationCount = (int) Math.floor(maxInsertCount * 1.0/measurementBatchSize);
-        }
+        sealed = true;
+
+        Information.SOURCE.save(benchmarkClass.getName(), this);
+
+        int iterationCount = (int) Math.floor(source.getNumberOfLines() * 1.0 / measurementBatchSize);
+
         Options build = new OptionsBuilder()
-                .include(InsertBenchmark.class.getName())
+                .include(benchmarkClass.getName())
                 .warmupIterations(0)
                 .measurementIterations(iterationCount)
                 .measurementBatchSize(measurementBatchSize)

@@ -1,5 +1,6 @@
-package com.eaybars.benchmark.insert;
+package com.eaybars.benchmark.insert.review;
 
+import com.eaybars.benchmark.insert.Insert;
 import org.openjdk.jmh.annotations.*;
 
 import javax.json.Json;
@@ -8,25 +9,20 @@ import java.io.*;
 import java.util.zip.GZIPInputStream;
 
 @State(Scope.Benchmark)
-public class InsertState {
-    public static final String REVIEW_FILE_PROPERTY = "InsertState.file.review";
-    public static final String COMMIT_INTERVAL_PROPERTY = "InsertState.param.commitInterval";
-
+public class Reviews {
+    private Insert insert;
     private BufferedReader reader;
     private JsonObject object;
     private int count;
-    private int commitInterval;
 
     @Setup(Level.Trial)
     public void setUp() throws IOException {
-        reader = new BufferedReader(new InputStreamReader(
-                new GZIPInputStream(
-                        new FileInputStream(System.getProperty(REVIEW_FILE_PROPERTY)))));
-        commitInterval = Integer.parseInt(System.getProperty(COMMIT_INTERVAL_PROPERTY, "20"));
+        insert = Insert.currentFor(ReviewsInsertBenchmark.class);
+        reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(insert.getSource().inputStream())));
     }
 
     @Setup(Level.Invocation)
-    public void advance() throws IOException {
+    public void next() throws IOException {
         object = Json.createReader(new StringReader(reader.readLine())).readObject();
         count++;
     }
@@ -34,7 +30,7 @@ public class InsertState {
     @TearDown(Level.Trial)
     public void tearDown() throws IOException {
         reader.close();
-        System.out.println("Count: "+count);
+        System.out.println("Count: " + count);
     }
 
     public JsonObject getObject() {
@@ -46,6 +42,6 @@ public class InsertState {
     }
 
     public int getCommitInterval() {
-        return commitInterval;
+        return insert.getCommitInterval();
     }
 }

@@ -1,4 +1,4 @@
-package com.eaybars.benchmark.insert;
+package com.eaybars.benchmark.insert.review;
 
 import com.eaybars.benchmark.GraphSupplier;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
@@ -12,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 @Fork(0)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class InsertBenchmark {
+public class ReviewsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(GraphSupplier graph, InsertState is) {
+    public void benchmark(GraphSupplier graph, Reviews is) {
         GraphTraversalSource g = graph.traversalSource();
         JsonObject object = is.getObject();
 

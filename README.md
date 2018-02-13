@@ -8,7 +8,7 @@ This is a study of performance comparison for various graph databases.
 * [OrientDB](https://github.com/orientechnologies/orientdb) V: 3.0.0RC1
 
 ## Test Data
-[Amazon product review data](http://jmcauley.ucsd.edu/data/amazon/) is used in this study. Specifically: [5 core Kindle Store](http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Kindle_Store_5.json.gz) <sup>[3](#F3)</sup>
+In order to work with a realistic case, [Amazon product review data](http://jmcauley.ucsd.edu/data/amazon/) <sup>[3](#F3)</sup> is used in this study. Data includes Kindle Store product metadata, and kindle store 5 core reviews. Semantics of these are explained on the source site.
 
 
 ## Test System
@@ -44,7 +44,6 @@ I will share my findings here as I discover them. Any contribution is welcome :)
 ### Notes
 * <a name="F1">[1]</a>: Kubernetes deployments based on [BM/Scalable-Cassandra-deployment-on-Kubernetes](https://github.com/IBM/Scalable-Cassandra-deployment-on-Kubernetes)
 * <a name="F2">[2]</a>: Kubernetes deployments based on [pires/kubernetes-elasticsearch-cluster](https://github.com/pires/kubernetes-elasticsearch-cluster)
-* <a name="F3">[3]</a>: Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering
-                            R. He, J. McAuley
-                            WWW, 2016
+* <a name="F3">[3]</a>: R. He, J. McAuley. Modeling the visual evolution of fashion trends with one-class collaborative filtering. WWW, 2016
+                        J. McAuley, C. Targett, J. Shi, A. van den Hengel. Image-based recommendations on styles and substitutes. SIGIR, 2015
 
