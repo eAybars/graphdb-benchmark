@@ -5,7 +5,7 @@ import java.nio.file.Files;
 
 public enum Information {
 
-    SOURCE;
+    BROKER;
 
     private File parentFolder;
 

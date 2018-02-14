@@ -57,7 +57,7 @@ public class Insert implements Serializable {
 
     public static Insert currentFor(Class<?> benchmarkClass) {
         try {
-            return Information.SOURCE.load(Insert.class, benchmarkClass.getName());
+            return Information.BROKER.load(Insert.class, benchmarkClass.getName());
         } catch (IOException e) {
             return null;
         }
@@ -86,7 +86,7 @@ public class Insert implements Serializable {
 
         sealed = true;
 
-        Information.SOURCE.save(benchmarkClass.getName(), this);
+        Information.BROKER.save(benchmarkClass.getName(), this);
 
         int iterationCount = (int) Math.floor(source.getNumberOfLines() * 1.0 / measurementBatchSize);
 
