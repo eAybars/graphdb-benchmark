@@ -15,4 +15,23 @@ spec:
       - name: janusgraph-benchmark
         image: eaybars/janusgraph-benchmark
         imagePullPolicy: IfNotPresent
-        args: ["-insert.review.file=/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz", "-insert.review.commit=20", "-q.mrrt=1", "-q.rpp=1"]
+        env:
+          - name: JMH_FORK
+            value: "0"
+        args:
+          - "-insert.product.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.product.commit=1"
+          - "-insert.product.count=433000"
+          - "-insert.product.measurementBatch=1000"
+          - "-insert.relatedProduct.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.relatedProduct.commit=1"
+          - "-insert.relatedProduct.count=433000"
+          - "-insert.relatedProduct.measurementBatch=1000"
+          - "-insert.productCategory.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.productCategory.commit=10"
+          - "-insert.productCategory.count=433000"
+          - "-insert.productCategory.measurementBatch=1000"
+          - "-insert.review.file=/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"
+          - "-insert.review.commit=20"
+          - "-q.mrrt=1"
+          - "-q.rpp=1"

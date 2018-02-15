@@ -29,19 +29,27 @@ public class JanusGraphSupplier implements Supplier<GraphTraversalSource> {
         if (graph.getEdgeLabel("created") == null) {
             management.makeEdgeLabel("created").multiplicity(Multiplicity.MULTI).make();
             management.makeEdgeLabel("about").multiplicity(Multiplicity.SIMPLE).make();
+            management.makeEdgeLabel("also_viewed").multiplicity(Multiplicity.MULTI).make();
+            management.makeEdgeLabel("buy_after_viewing").multiplicity(Multiplicity.MULTI).make();
+            management.makeEdgeLabel("productCategory").multiplicity(Multiplicity.MULTI).make();
 
             management.makeVertexLabel("person").make();
             management.makeVertexLabel("review").make();
             management.makeVertexLabel("product").make();
+            management.makeVertexLabel("category").make();
 
+            PropertyKey categoryName = management.makePropertyKey("categoryName").dataType(String.class).cardinality(Cardinality.SINGLE).make();
             PropertyKey userId = management.makePropertyKey("reviewerID").dataType(String.class).cardinality(Cardinality.SINGLE).make();
             PropertyKey productId = management.makePropertyKey("productId").dataType(String.class).cardinality(Cardinality.SINGLE).make();
+            PropertyKey price = management.makePropertyKey("price").dataType(Double.class).cardinality(Cardinality.SINGLE).make();
             PropertyKey overall = management.makePropertyKey("overall").dataType(Double.class).cardinality(Cardinality.SINGLE).make();
             PropertyKey unixReviewTime = management.makePropertyKey("unixReviewTime").dataType(Long.class).cardinality(Cardinality.SINGLE).make();
 
+            management.buildIndex("categoryNameIndex", Vertex.class).addKey(categoryName).buildCompositeIndex();
             management.buildIndex("userIdIndex", Vertex.class).addKey(userId).buildCompositeIndex();
             management.buildIndex("productIdIndex", Vertex.class).addKey(productId).buildCompositeIndex();
             management.buildIndex("overallFieldIndex", Vertex.class).addKey(overall).buildMixedIndex("search");
+            management.buildIndex("priceFieldIndex", Vertex.class).addKey(price).buildMixedIndex("search");
             management.buildIndex("unixReviewTimeIndex", Vertex.class).addKey(unixReviewTime).buildMixedIndex("search");
 
             management.commit();

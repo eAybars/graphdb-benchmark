@@ -30,7 +30,6 @@ public class Reviews {
     @TearDown(Level.Trial)
     public void tearDown() throws IOException {
         reader.close();
-        System.out.println("Count: " + count);
     }
 
     public JsonObject getObject() {

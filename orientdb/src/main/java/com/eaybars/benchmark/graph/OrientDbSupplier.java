@@ -22,19 +22,27 @@ public class OrientDbSupplier implements Supplier<GraphTraversalSource> {
         if (db.getClass("created") == null) {
             OClass created = db.createEdgeClass("created");
             db.createEdgeClass("about");
+            db.createEdgeClass("buy_after_viewing");
+            db.createEdgeClass("also_viewed");
+            db.createEdgeClass("productCategory");
 
             OClass person = db.createVertexClass("person");
             OClass review = db.createVertexClass("review");
             OClass product = db.createVertexClass("product");
+            OClass category = db.createVertexClass("category");
 
+            category.createProperty("categoryName", OType.STRING);
             person.createProperty("reviewerID", OType.STRING);
             product.createProperty("productId", OType.STRING);
+            product.createProperty("price", OType.DOUBLE);
             review.createProperty("overall", OType.DOUBLE);
             review.createProperty("unixReviewTime", OType.LONG);
             created.createProperty("unixReviewTime", OType.LONG);
 
+            category.createIndex("categoryNameIndex", OClass.INDEX_TYPE.NOTUNIQUE_HASH_INDEX, "categoryName");
             person.createIndex("userIdIndex", OClass.INDEX_TYPE.NOTUNIQUE_HASH_INDEX, "reviewerID");
             product.createIndex("productIdIndex", OClass.INDEX_TYPE.NOTUNIQUE_HASH_INDEX, "productId");
+            product.createIndex("priceFieldIndex", OClass.INDEX_TYPE.NOTUNIQUE, "price");
             review.createIndex("overallFieldIndex", OClass.INDEX_TYPE.NOTUNIQUE, "overall");
             review.createIndex("review_unixReviewTimeIndex", OClass.INDEX_TYPE.NOTUNIQUE, "unixReviewTime");
             created.createIndex("created_overallFieldIndex", OClass.INDEX_TYPE.NOTUNIQUE, "unixReviewTime");

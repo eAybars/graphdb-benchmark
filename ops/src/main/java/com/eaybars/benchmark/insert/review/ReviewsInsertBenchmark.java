@@ -3,13 +3,15 @@ package com.eaybars.benchmark.insert.review;
 import com.eaybars.benchmark.GraphSupplier;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
-import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
 
 import javax.json.JsonObject;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-@Fork(0)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
 public class ReviewsInsertBenchmark {

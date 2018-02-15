@@ -6,9 +6,9 @@ import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import java.util.function.Supplier;
 
 public class TinkerGraphSupplier implements Supplier<GraphTraversalSource> {
+    private static final TinkerGraph GRAPH = TinkerGraph.open();
     @Override
     public GraphTraversalSource get() {
-        TinkerGraph graph = TinkerGraph.open();
-        return graph.traversal();
+        return GRAPH.traversal();
     }
 }

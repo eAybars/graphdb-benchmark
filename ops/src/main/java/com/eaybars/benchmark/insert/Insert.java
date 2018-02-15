@@ -7,6 +7,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Optional;
 
 public class Insert implements Serializable {
     private InsertSource source;
@@ -57,7 +58,7 @@ public class Insert implements Serializable {
 
     public static Insert currentFor(Class<?> benchmarkClass) {
         try {
-            return Information.BROKER.load(Insert.class, benchmarkClass.getName());
+            return Information.BROKER.load(Insert.class);
         } catch (IOException e) {
             return null;
         }
@@ -86,16 +87,23 @@ public class Insert implements Serializable {
 
         sealed = true;
 
-        Information.BROKER.save(benchmarkClass.getName(), this);
+        Information.BROKER.save( this);
 
-        int iterationCount = (int) Math.floor(source.getNumberOfLines() * 1.0 / measurementBatchSize);
+        int iterationCount = (int) Math.floor(insertCount * 1.0 / measurementBatchSize);
+
+        int fork;
+        try {
+            fork = Integer.parseInt(Optional.ofNullable(System.getenv("JMH_FORK")).orElse("0"));
+        } catch (NumberFormatException e) {
+            fork = 0;
+        }
 
         Options build = new OptionsBuilder()
                 .include(benchmarkClass.getName())
                 .warmupIterations(0)
                 .measurementIterations(iterationCount)
                 .measurementBatchSize(measurementBatchSize)
-                .forks(0)
+                .forks(fork)
                 .build();
 
         new Runner(build).run();

@@ -1,6 +1,9 @@
 package com.eaybars.benchmark;
 
 import com.eaybars.benchmark.insert.Insert;
+import com.eaybars.benchmark.insert.product.CategoryInsertBenchmark;
+import com.eaybars.benchmark.insert.product.ProductsInsertBenchmark;
+import com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark;
 import com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark;
 import com.eaybars.benchmark.query.MostRecentReviewTime;
 import com.eaybars.benchmark.query.RecentPopularProducts;
@@ -21,13 +24,10 @@ public class ExecutorDelegation {
     }
 
     public void run() throws Exception {
-        if (extract("-insert.review", s -> true, false)) {
-            Insert.fromFile(extract("-insert.review.file=", Function.identity(), "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"))
-                    .insertCount(extract("-insert.review.count=", Integer::parseInt, -1))
-                    .measurementBatchSize(extract("-insert.review.measurementBatch=", Integer::parseInt, 1000))
-                    .commitInterval(extract("-insert.review.commit=", Integer::parseInt, 20))
-                    .run(ReviewsInsertBenchmark.class);
-        }
+        checkAndRunInsert(ProductsInsertBenchmark.class, "-insert.product.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
+        checkAndRunInsert(CategoryInsertBenchmark.class, "-insert.productCategory.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
+        checkAndRunInsert(RelatedProductsInsertBenchmark.class, "-insert.relatedProduct.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
+        checkAndRunInsert(ReviewsInsertBenchmark.class, "-insert.review.", "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz");
 
         int times = extract("-q.mrrt=", Integer::parseInt, 0);
         if (times > 0) {
@@ -38,6 +38,20 @@ public class ExecutorDelegation {
         if (times > 0) {
             RecentPopularProducts.run(times);
         }
+    }
+
+    private void checkAndRunInsert(Class<?> type, String prefix, String defaultFile) throws Exception {
+        if (extract(prefix, s -> true, false)) {
+            Insert.fromFile(extract(withPrefix(prefix, "file="), Function.identity(), defaultFile))
+                    .insertCount(extract(withPrefix(prefix, "count="), Integer::parseInt, -1))
+                    .measurementBatchSize(extract(withPrefix(prefix, "measurementBatch="), Integer::parseInt, 1000))
+                    .commitInterval(extract(withPrefix(prefix, "commit="), Integer::parseInt, 20))
+                    .run(type);
+        }
+    }
+
+    private String withPrefix(String prefix, String param) {
+        return prefix+param;
     }
 
     public static void main(String[] args) throws Exception {
