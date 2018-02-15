@@ -2,10 +2,12 @@ package com.eaybars.benchmark.insert.product;
 
 import com.eaybars.benchmark.insert.Insert;
 import com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.openjdk.jmh.annotations.*;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonString;
 import javax.json.stream.JsonParsingException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -75,7 +77,7 @@ public class Products {
     private Set<String> collectCategories() {
         JsonArray categories = object.getJsonArray("categories");
         return categories.stream()
-                .map(JsonValue::asJsonArray)
+                .map(JsonArray.class::cast)
                 .flatMap(JsonArray::stream)
                 .map(JsonString.class::cast)
                 .map(JsonString::getString)
