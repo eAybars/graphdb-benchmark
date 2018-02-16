@@ -9,6 +9,8 @@ RUN mkdir /opt/graphdb-benchmark/ \
 RUN curl -Lo /opt/graphdb-benchmark/meta_Kindle_Store.json.gz http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Kindle_Store.json.gz \
         && chmod 777 /opt/graphdb-benchmark/meta_Kindle_Store.json.gz
 
+ENV JAVA_OPTIONS "-Xms256m -Xmx512m"
+
 USER jboss
 ENTRYPOINT ["java", "-jar", "/opt/graphdb-benchmark/benchmark-jar-with-dependencies.jar"]
 

@@ -10,6 +10,7 @@ import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 
 import javax.json.JsonObject;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
@@ -21,7 +22,12 @@ public class RelatedProductsInsertBenchmark {
         GraphTraversalSource g = graphSupplier.traversalSource();
         JsonObject object = products.getObject();
 
-        Vertex product = g.V().hasLabel("product").has("productId", object.getString("asin")).next();
+        Vertex product;
+        try {
+            product = g.V().hasLabel("product").has("productId", object.getString("asin")).next();
+        } catch (NoSuchElementException e) {
+            product = null;
+        }
         if (product != null) {
             if (!products.getAlsoViewed().isEmpty()) {
                 Long next = g.V().hasLabel("product").has("productId", P.within(products.getAlsoViewed()))

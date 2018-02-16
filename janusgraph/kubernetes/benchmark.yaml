@@ -18,6 +18,8 @@ spec:
         env:
           - name: JMH_FORK
             value: "0"
+          - name: JAVA_OPTIONS
+            value: "-Xms512m -Xmx512m"
         args:
           - "-insert.product.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
           - "-insert.product.commit=1"

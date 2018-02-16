@@ -21,7 +21,12 @@ public class CategoryInsertBenchmark {
     public void benchmark(Products products, GraphSupplier graphSupplier) {
         GraphTraversalSource g = graphSupplier.traversalSource();
         JsonObject object = products.getObject();
-        Vertex product = g.V().hasLabel("product").has("productId", object.getString("asin")).next();
+        Vertex product;
+        try {
+            product = g.V().hasLabel("product").has("productId", object.getString("asin")).next();
+        } catch (NoSuchElementException e) {
+            product = null;
+        }
         if (product != null) {
             if (!products.getCategories().isEmpty()) {
                 for (String category : products.getCategories()) {

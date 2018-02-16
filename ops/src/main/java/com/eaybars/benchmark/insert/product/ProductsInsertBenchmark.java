@@ -25,7 +25,7 @@ public class ProductsInsertBenchmark {
                 .property("productId", object.getString("asin"))
                 .property("description", object.getString("description", ""))
                 .property("price", Optional.ofNullable(object.getJsonNumber("price")).map(JsonNumber::doubleValue).orElse(0.0))
-                .property("\"imUrl\"", object.getString("imUrl", ""))
+                .property("imUrl", object.getString("imUrl", ""))
                 .next();
 
         if (products.getCommitInterval() == 1 || products.getCount() % products.getCommitInterval() == 0) {
