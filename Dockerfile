@@ -12,7 +12,10 @@ RUN curl -Lo /opt/graphdb-benchmark/meta_Kindle_Store.json.gz http://snap.stanfo
 ENV JAVA_OPTIONS "-Xms256m -Xmx512m"
 
 USER jboss
-ENTRYPOINT ["sh", "-c", "java", "-jar", "$JAVA_OPTIONS", "/opt/graphdb-benchmark/benchmark-jar-with-dependencies.jar"]
+ENTRYPOINT arg=($JAVA_OPTIONS) \
+	&& arg+=("-jar" "/opt/graphdb-benchmark/benchmark-jar-with-dependencies.jar") \
+	&& arg+=("$@") \
+	&& java ${arg[@]}
 
 ARG APP_PATH
 
