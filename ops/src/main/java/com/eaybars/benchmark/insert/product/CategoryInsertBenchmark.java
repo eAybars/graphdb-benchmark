@@ -2,7 +2,6 @@ package com.eaybars.benchmark.insert.product;
 
 import com.eaybars.benchmark.GraphSupplier;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
-import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -31,18 +30,12 @@ public class CategoryInsertBenchmark {
             if (!products.getCategories().isEmpty()) {
                 for (String category : products.getCategories()) {
                     try {
-                        Edge edge = product.addEdge("productCategory",
+                        product.addEdge("productCategory",
                                 g.V("category").has("categoryName", category).next());
-                        if (edge != null) {
-                            System.out.println(edge);
-                        }
                     } catch (NoSuchElementException e) {
-                        Edge next = g.addV("category")
+                        g.addV("category")
                                 .property("categoryName", category)
                                 .addE("productCategory").from(product).next();
-                        if (next != null) {
-                            System.out.println(next);
-                        }
                     }
                 }
             }

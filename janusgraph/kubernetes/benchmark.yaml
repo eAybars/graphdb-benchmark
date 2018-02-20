@@ -35,5 +35,5 @@ spec:
           - "-insert.productCategory.measurementBatch=1000"
           - "-insert.review.file=/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"
           - "-insert.review.commit=20"
-          - "-q.mrrt=1"
-          - "-q.rpp=1"
+          - "-q.mrrt=5"
+          - "-q.rpp=5"

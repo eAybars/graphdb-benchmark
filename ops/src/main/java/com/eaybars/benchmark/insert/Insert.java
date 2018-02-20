@@ -14,6 +14,7 @@ public class Insert implements Serializable {
     private int commitInterval;
     private int measurementBatchSize;
     private int insertCount;
+    private int startFrom;
 
     private boolean sealed;
 
@@ -56,6 +57,14 @@ public class Insert implements Serializable {
         return this;
     }
 
+    public Insert startingFrom(int startFrom) {
+        if (sealed) {
+            throw new IllegalStateException();
+        }
+        this.startFrom = startFrom;
+        return this;
+    }
+
     public static Insert currentFor(Class<?> benchmarkClass) {
         try {
             return Information.BROKER.load(Insert.class);
@@ -82,14 +91,16 @@ public class Insert implements Serializable {
 
     public void run(Class<?> benchmarkClass) throws Exception {
         if (insertCount < 0) {
-            insertCount = source.getNumberOfLines();
+            insertCount = source.getNumberOfLines() - startFrom;
         }
 
         sealed = true;
 
         Information.BROKER.save( this);
 
-        int iterationCount = (int) Math.floor(insertCount * 1.0 / measurementBatchSize);
+        int excess = Math.max(startFrom + insertCount - source.getNumberOfLines(), 0);
+
+        int iterationCount = (int) Math.floor((insertCount - excess) * 1.0 / measurementBatchSize);
 
         int fork;
         try {

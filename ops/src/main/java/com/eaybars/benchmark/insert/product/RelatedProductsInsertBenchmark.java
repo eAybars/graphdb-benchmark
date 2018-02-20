@@ -30,11 +30,11 @@ public class RelatedProductsInsertBenchmark {
         }
         if (product != null) {
             if (!products.getAlsoViewed().isEmpty()) {
-                Long next = g.V().hasLabel("product").has("productId", P.within(products.getAlsoViewed()))
+                g.V().hasLabel("product").has("productId", P.within(products.getAlsoViewed()))
                         .addE("also_viewed").from(product).count().next();
             }
             if (!products.getBuyAfterViewing().isEmpty()) {
-                Long next = g.V().hasLabel("product").has("productId", P.within(products.getBuyAfterViewing()))
+                g.V().hasLabel("product").has("productId", P.within(products.getBuyAfterViewing()))
                         .addE("buy_after_viewing").from(product).count().next();
             }
         }
