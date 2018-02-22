@@ -17,17 +17,17 @@ import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class MostRecentReviewTime {
+public class MostRecentReviewTimeByMax {
 
     @Benchmark
     public Number query(GraphSupplier graphSupplier) {
         GraphTraversalSource g = graphSupplier.traversalSource();
-        return g.V().hasLabel("review").properties("unixReviewTime").value().max().next();
+        return g.V().hasLabel("review").values("unixReviewTime").max().next();
     }
 
     public static void run(int times) throws RunnerException {
         Options build = new OptionsBuilder()
-                .include(MostRecentReviewTime.class.getName())
+                .include(MostRecentReviewTimeByMax.class.getName())
                 .warmupIterations(0)
                 .measurementIterations(times)
                 .timeout(TimeValue.hours(4))

@@ -5,7 +5,9 @@ import com.eaybars.benchmark.insert.product.CategoryInsertBenchmark;
 import com.eaybars.benchmark.insert.product.ProductsInsertBenchmark;
 import com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark;
 import com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark;
-import com.eaybars.benchmark.query.MostRecentReviewTime;
+import com.eaybars.benchmark.query.MostPopularCategories;
+import com.eaybars.benchmark.query.MostRecentReviewTimeByLimit;
+import com.eaybars.benchmark.query.MostRecentReviewTimeByMax;
 import com.eaybars.benchmark.query.RecentPopularProducts;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 
@@ -32,18 +34,28 @@ public class ExecutorDelegation {
 
     private void run() throws Exception {
         checkAndRunInsert(ProductsInsertBenchmark.class, "-insert.product.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
+        checkAndRunInsert(ReviewsInsertBenchmark.class, "-insert.review.", "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz");
         checkAndRunInsert(CategoryInsertBenchmark.class, "-insert.productCategory.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
         checkAndRunInsert(RelatedProductsInsertBenchmark.class, "-insert.relatedProduct.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
-        checkAndRunInsert(ReviewsInsertBenchmark.class, "-insert.review.", "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz");
 
-        int times = extract("-query.mrrt=", Integer::parseInt, 0);
+        int times = extract("-query.mrrtbm=", Integer::parseInt, 0);
         if (times > 0) {
-            MostRecentReviewTime.run(times);
+            MostRecentReviewTimeByMax.run(times);
+        }
+
+        times = extract("-query.mrrtbl=", Integer::parseInt, 0);
+        if (times > 0) {
+            MostRecentReviewTimeByLimit.run(times);
         }
 
         times = extract("-query.rpp=", Integer::parseInt, 0);
         if (times > 0) {
             RecentPopularProducts.run(times);
+        }
+
+        times = extract("-query.mpc=", Integer::parseInt, 0);
+        if (times > 0) {
+            MostPopularCategories.run(times);
         }
     }
 

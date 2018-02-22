@@ -31,7 +31,7 @@ public class CategoryInsertBenchmark {
                 for (String category : products.getCategories()) {
                     try {
                         product.addEdge("productCategory",
-                                g.V("category").has("categoryName", category).next());
+                                g.V().hasLabel("category").has("categoryName", category).next());
                     } catch (NoSuchElementException e) {
                         g.addV("category")
                                 .property("categoryName", category)
