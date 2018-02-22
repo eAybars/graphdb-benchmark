@@ -1,7 +1,6 @@
 package com.eaybars.benchmark.insert.product;
 
 import com.eaybars.benchmark.insert.Insert;
-import com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark;
 import org.openjdk.jmh.annotations.*;
 
 import javax.json.Json;
@@ -16,11 +15,10 @@ import java.io.StringReader;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.zip.GZIPInputStream;
 
 @State(Scope.Benchmark)
 public class Products {
-    private Insert insert;
+    private Insert.Options options;
     private BufferedReader reader;
     private JsonObject object;
     private int count;
@@ -31,8 +29,11 @@ public class Products {
 
     @Setup(Level.Trial)
     public void setUp() throws IOException {
-        insert = Insert.currentFor(ReviewsInsertBenchmark.class);
-        reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(insert.getSource().inputStream())));
+        options = Insert.currentInsertOptions();
+        reader = new BufferedReader(new InputStreamReader(options.getSource().inputStream()));
+        for (int i = 0; i < options.getStartFrom(); i++) {
+            next();
+        }
     }
 
     @Setup(Level.Invocation)
@@ -110,6 +111,6 @@ public class Products {
     }
 
     public int getCommitInterval() {
-        return insert.getCommitInterval();
+        return options.getCommitInterval();
     }
 }

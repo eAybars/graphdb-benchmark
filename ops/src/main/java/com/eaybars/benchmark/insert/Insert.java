@@ -9,22 +9,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Optional;
 
-public class Insert implements Serializable {
-    private InsertSource source;
-    private int commitInterval;
-    private int measurementBatchSize;
-    private int insertCount;
-    private int startFrom;
-
-    private boolean sealed;
+public class Insert implements Serializable, Cloneable {
+    private static final String CURRENT_OPTIONS_NAME = "com.eaybars.benchmark.graph.insert.currentoptions";
+    private Options options = new Options();
 
     public static Insert fromFile(String file) {
         Insert insert = new Insert();
         try {
-            insert.source = InsertSource.from(file);
-            if (!insert.source.exists()) {
+            insert.options.source = InsertSource.from(file);
+            if (!insert.options.source.exists()) {
                 throw new IllegalArgumentException("Review file not found: " + file);
-            } else if (insert.source.getNumberOfLines() == 0) {
+            } else if (insert.options.source.getNumberOfLines() == 0) {
                 throw new IllegalArgumentException("Review file is empty: " + file);
             }
         } catch (IOException e) {
@@ -34,73 +29,52 @@ public class Insert implements Serializable {
     }
 
     public Insert commitInterval(int interval) {
-        if (sealed) {
-            throw new IllegalStateException();
-        }
-        this.commitInterval = interval;
+        this.options.commitInterval = interval;
         return this;
     }
 
     public Insert measurementBatchSize(int measurementBatchSize) {
-        if (sealed) {
-            throw new IllegalStateException();
-        }
-        this.measurementBatchSize = measurementBatchSize;
+        this.options.measurementBatchSize = measurementBatchSize;
         return this;
     }
 
     public Insert insertCount(int insertCount) {
-        if (sealed) {
-            throw new IllegalStateException();
-        }
-        this.insertCount = insertCount;
+        this.options.insertCount = insertCount;
         return this;
     }
 
     public Insert startingFrom(int startFrom) {
-        if (sealed) {
-            throw new IllegalStateException();
-        }
-        this.startFrom = startFrom;
+        this.options.startFrom = startFrom;
         return this;
     }
 
-    public static Insert currentFor(Class<?> benchmarkClass) {
+    public static Options currentInsertOptions() {
         try {
-            return Information.BROKER.load(Insert.class);
+            return Information.BROKER.load(Options.class, System.getProperty(CURRENT_OPTIONS_NAME, "~none"));
         } catch (IOException e) {
             return null;
         }
     }
 
-    public InsertSource getSource() {
-        return source;
-    }
-
-    public int getCommitInterval() {
-        return commitInterval;
-    }
-
-    public int getMeasurementBatchSize() {
-        return measurementBatchSize;
-    }
-
-    public int getInsertCount() {
-        return insertCount;
+    public Options getOptions() {
+        return options;
     }
 
     public void run(Class<?> benchmarkClass) throws Exception {
-        if (insertCount < 0) {
-            insertCount = source.getNumberOfLines() - startFrom;
+        if (options.insertCount < 0) {
+            options.insertCount = options.source.getNumberOfLines() - options.startFrom;
         }
 
-        sealed = true;
+        Options clone = options.clone();
 
-        Information.BROKER.save( this);
+        String name = benchmarkClass.getName()+".Options";
+        System.setProperty(CURRENT_OPTIONS_NAME, name);
 
-        int excess = Math.max(startFrom + insertCount - source.getNumberOfLines(), 0);
+        Information.BROKER.save( name, clone);
 
-        int iterationCount = (int) Math.floor((insertCount - excess) * 1.0 / measurementBatchSize);
+        int excess = Math.max(clone.startFrom + clone.insertCount - clone.source.getNumberOfLines(), 0);
+
+        int iterationCount = (int) Math.floor((clone.insertCount - excess) * 1.0 / clone.measurementBatchSize);
 
         int fork;
         try {
@@ -109,15 +83,52 @@ public class Insert implements Serializable {
             fork = 0;
         }
 
-        Options build = new OptionsBuilder()
+        org.openjdk.jmh.runner.options.Options build = new OptionsBuilder()
                 .include(benchmarkClass.getName())
                 .warmupIterations(0)
                 .measurementIterations(iterationCount)
-                .measurementBatchSize(measurementBatchSize)
+                .measurementBatchSize(clone.measurementBatchSize)
                 .forks(fork)
                 .build();
 
         new Runner(build).run();
+    }
+
+    public static class Options implements Serializable, Cloneable{
+        private InsertSource source;
+        private int commitInterval;
+        private int measurementBatchSize;
+        private int insertCount;
+        private int startFrom;
+
+        public InsertSource getSource() {
+            return source;
+        }
+
+        public int getCommitInterval() {
+            return commitInterval;
+        }
+
+        public int getMeasurementBatchSize() {
+            return measurementBatchSize;
+        }
+
+        public int getInsertCount() {
+            return insertCount;
+        }
+
+        public int getStartFrom() {
+            return startFrom;
+        }
+
+        @Override
+        public Options clone() {
+            try {
+                return (Options) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new InternalError(e);
+            }
+        }
     }
 
 }

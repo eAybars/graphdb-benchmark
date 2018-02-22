@@ -1,6 +1,8 @@
 package com.eaybars.benchmark.insert;
 
 import java.io.*;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.ZipException;
 
 public class InsertSource implements Serializable {
     private File file;
@@ -22,8 +24,12 @@ public class InsertSource implements Serializable {
         return numberOfLines;
     }
 
-    public InputStream inputStream() throws FileNotFoundException {
-        return new BufferedInputStream(new FileInputStream(file));
+    public InputStream inputStream() throws IOException {
+        try {
+            return new GZIPInputStream(new FileInputStream(file), 4096);
+        } catch (ZipException e) {
+            return new FileInputStream(file);
+        }
     }
 
     private void calculateNumberOfLines() throws IOException {

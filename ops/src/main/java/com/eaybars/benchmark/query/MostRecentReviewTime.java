@@ -16,13 +16,11 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
 public class MostRecentReviewTime {
-    public static final String MOST_RECENT_REVIEW_TIME_RESULT = "MostRecentReviewTime.result";
 
     @Benchmark
-    public void query(GraphSupplier graphSupplier) {
+    public Number query(GraphSupplier graphSupplier) {
         GraphTraversalSource g = graphSupplier.traversalSource();
-        Number maxReviewTime = g.V().hasLabel("review").properties("unixReviewTime").value().max().next();
-        System.setProperty(MOST_RECENT_REVIEW_TIME_RESULT, String.valueOf(maxReviewTime.longValue()));
+        return g.V().hasLabel("review").properties("unixReviewTime").value().max().next();
     }
 
     public static void run(int times) throws RunnerException {

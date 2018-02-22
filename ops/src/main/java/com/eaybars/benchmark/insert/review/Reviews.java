@@ -5,20 +5,25 @@ import org.openjdk.jmh.annotations.*;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import java.io.*;
-import java.util.zip.GZIPInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 
 @State(Scope.Benchmark)
 public class Reviews {
-    private Insert insert;
+    private Insert.Options options;
     private BufferedReader reader;
     private JsonObject object;
     private int count;
 
     @Setup(Level.Trial)
     public void setUp() throws IOException {
-        insert = Insert.currentFor(ReviewsInsertBenchmark.class);
-        reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(insert.getSource().inputStream())));
+        options = Insert.currentInsertOptions();
+        reader = new BufferedReader(new InputStreamReader(options.getSource().inputStream()));
+        for (int i = 0; i < options.getStartFrom(); i++) {
+            next();
+        }
     }
 
     @Setup(Level.Invocation)
@@ -41,6 +46,6 @@ public class Reviews {
     }
 
     public int getCommitInterval() {
-        return insert.getCommitInterval();
+        return options.getCommitInterval();
     }
 }

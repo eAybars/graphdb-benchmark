@@ -1,5 +1,6 @@
 package com.eaybars.benchmark.query;
 
+import com.eaybars.benchmark.ExecutorDelegation;
 import com.eaybars.benchmark.GraphSupplier;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
@@ -19,20 +20,18 @@ import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.inE;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
+@State(Scope.Benchmark)
 public class RecentPopularProducts {
+
+    //six months before 1406073600L most recent review unix time
+    private long reviewTime = ExecutorDelegation.getInstance().extract("-query.rpp.reviewTime=", Long::parseLong, 1390521600L);
 
     @Benchmark
     public List<Vertex> query(GraphSupplier graphSupplier) {
         GraphTraversalSource g = graphSupplier.traversalSource();
 
-        long mostRecentReviewTime = Long.parseLong(System.getProperty(
-                MostRecentReviewTime.MOST_RECENT_REVIEW_TIME_RESULT,
-                String.valueOf(System.currentTimeMillis())));
-
-        long recently = mostRecentReviewTime - 15_552_000_000L; //6 months earlier
-
         List<Vertex>  res = g.V().hasLabel("review")
-                .has("unixReviewTime", P.gt(recently))
+                .has("unixReviewTime", P.gt(reviewTime))
                 .out("about")
                 .dedup()
                 .order().by(inE("about").count(), Order.decr)

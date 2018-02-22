@@ -9,7 +9,7 @@ import com.eaybars.benchmark.query.MostRecentReviewTime;
 import com.eaybars.benchmark.query.RecentPopularProducts;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 
-import javax.naming.spi.NamingManager;
+import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -17,24 +17,30 @@ import java.util.stream.Stream;
 public class ExecutorDelegation {
     public static Class<? extends Supplier<GraphTraversalSource>> GRAPH_SUPPLIER_CLASS;
 
+    private static final Object MONITOR = new Object();
+    private static volatile ExecutorDelegation instance;
     private String[] args;
 
     public ExecutorDelegation(String[] args) {
         this.args = args;
     }
 
-    public void run() throws Exception {
+    public static ExecutorDelegation getInstance() {
+        return instance;
+    }
+
+    private void run() throws Exception {
         checkAndRunInsert(ProductsInsertBenchmark.class, "-insert.product.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
         checkAndRunInsert(CategoryInsertBenchmark.class, "-insert.productCategory.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
         checkAndRunInsert(RelatedProductsInsertBenchmark.class, "-insert.relatedProduct.", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz");
         checkAndRunInsert(ReviewsInsertBenchmark.class, "-insert.review.", "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz");
 
-        int times = extract("-q.mrrt=", Integer::parseInt, 0);
+        int times = extract("-query.mrrt=", Integer::parseInt, 0);
         if (times > 0) {
             MostRecentReviewTime.run(times);
         }
 
-        times = extract("-q.rpp=", Integer::parseInt, 0);
+        times = extract("-query.rpp=", Integer::parseInt, 0);
         if (times > 0) {
             RecentPopularProducts.run(times);
         }
@@ -44,6 +50,7 @@ public class ExecutorDelegation {
         if (extract(prefix, s -> true, false)) {
             Insert.fromFile(extract(withPrefix(prefix, "file="), Function.identity(), defaultFile))
                     .insertCount(extract(withPrefix(prefix, "count="), Integer::parseInt, -1))
+                    .startingFrom(extract(withPrefix(prefix, "start="), Integer::parseInt, 0))
                     .measurementBatchSize(extract(withPrefix(prefix, "measurementBatch="), Integer::parseInt, 1000))
                     .commitInterval(extract(withPrefix(prefix, "commit="), Integer::parseInt, 20))
                     .run(type);
@@ -59,12 +66,23 @@ public class ExecutorDelegation {
             System.out.println("No graph supplier found:");
             System.exit(0);
         }
-        System.setProperty(GraphSupplier.GRAPH_SUPPLIER_CLASS_PROPERTY, GRAPH_SUPPLIER_CLASS.getName());
-
-        new ExecutorDelegation(args).run();
+        boolean execute = false;
+        if (instance == null) {
+            synchronized (MONITOR) {
+                if (instance == null) {
+                    instance = new ExecutorDelegation(args);
+                    execute = true;
+                }
+            }
+        }
+        if (execute) {
+            System.setProperty(GraphSupplier.GRAPH_SUPPLIER_CLASS_PROPERTY, GRAPH_SUPPLIER_CLASS.getName());
+            System.out.println("Running benchmarks with the following arguments: "+ Arrays.toString(args));
+            instance.run();
+        }
     }
 
-    private <T> T extract(String param, Function<String, T> mapper, T defaultValue) {
+    public <T> T extract(String param, Function<String, T> mapper, T defaultValue) {
         return Stream.of(args)
                 .filter(arg -> arg.startsWith(param))
                 .map(arg -> arg.substring(param.length()))
