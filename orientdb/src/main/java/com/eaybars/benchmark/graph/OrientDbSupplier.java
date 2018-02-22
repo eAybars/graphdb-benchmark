@@ -16,7 +16,10 @@ public class OrientDbSupplier implements Supplier<GraphTraversalSource> {
     @Override
     public GraphTraversalSource get() {
         OrientDB orient = new OrientDB("remote:orientdb", "root", "orientdb", OrientDBConfig.defaultConfig());
-        orient.create("test", ODatabaseType.PLOCAL);
+        try {
+            orient.create("test", ODatabaseType.PLOCAL);
+        } catch (Exception e) {
+        }
         ODatabaseSession db = orient.open("test", "admin", "admin");
 
         if (db.getClass("created") == null) {

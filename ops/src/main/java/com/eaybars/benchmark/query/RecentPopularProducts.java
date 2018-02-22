@@ -11,6 +11,7 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -46,7 +47,8 @@ public class RecentPopularProducts {
                 .include(RecentPopularProducts.class.getName())
                 .warmupIterations(0)
                 .measurementIterations(times)
-                .forks(0)
+                .timeout(TimeValue.hours(4))
+                .forks(ExecutorDelegation.forks())
                 .build();
 
         new Runner(build).run();

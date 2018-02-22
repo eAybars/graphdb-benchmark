@@ -1,13 +1,12 @@
 package com.eaybars.benchmark.insert;
 
+import com.eaybars.benchmark.ExecutorDelegation;
 import com.eaybars.benchmark.Information;
 import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Optional;
 
 public class Insert implements Serializable, Cloneable {
     private static final String CURRENT_OPTIONS_NAME = "com.eaybars.benchmark.graph.insert.currentoptions";
@@ -67,34 +66,27 @@ public class Insert implements Serializable, Cloneable {
 
         Options clone = options.clone();
 
-        String name = benchmarkClass.getName()+".Options";
+        String name = benchmarkClass.getName() + ".Options";
         System.setProperty(CURRENT_OPTIONS_NAME, name);
 
-        Information.BROKER.save( name, clone);
+        Information.BROKER.save(name, clone);
 
         int excess = Math.max(clone.startFrom + clone.insertCount - clone.source.getNumberOfLines(), 0);
 
         int iterationCount = (int) Math.floor((clone.insertCount - excess) * 1.0 / clone.measurementBatchSize);
-
-        int fork;
-        try {
-            fork = Integer.parseInt(Optional.ofNullable(System.getenv("JMH_FORK")).orElse("0"));
-        } catch (NumberFormatException e) {
-            fork = 0;
-        }
 
         org.openjdk.jmh.runner.options.Options build = new OptionsBuilder()
                 .include(benchmarkClass.getName())
                 .warmupIterations(0)
                 .measurementIterations(iterationCount)
                 .measurementBatchSize(clone.measurementBatchSize)
-                .forks(fork)
+                .forks(ExecutorDelegation.forks())
                 .build();
 
         new Runner(build).run();
     }
 
-    public static class Options implements Serializable, Cloneable{
+    public static class Options implements Serializable, Cloneable {
         private InsertSource source;
         private int commitInterval;
         private int measurementBatchSize;

@@ -10,6 +10,7 @@ import com.eaybars.benchmark.query.RecentPopularProducts;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -89,5 +90,15 @@ public class ExecutorDelegation {
                 .map(mapper)
                 .findFirst()
                 .orElse(defaultValue);
+    }
+
+    public static int forks() {
+        int fork;
+        try {
+            fork = Integer.parseInt(Optional.ofNullable(System.getenv("JMH_FORK")).orElse("0"));
+        } catch (NumberFormatException e) {
+            fork = 0;
+        }
+        return fork;
     }
 }
