@@ -4,6 +4,7 @@ import com.eaybars.benchmark.ExecutorDelegation;
 import com.eaybars.benchmark.Information;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -78,6 +79,7 @@ public class Insert implements Serializable, Cloneable {
         org.openjdk.jmh.runner.options.Options build = new OptionsBuilder()
                 .include(benchmarkClass.getName())
                 .warmupIterations(0)
+                .timeout(TimeValue.hours(2))
                 .measurementIterations(iterationCount)
                 .measurementBatchSize(clone.measurementBatchSize)
                 .forks(ExecutorDelegation.forks())
