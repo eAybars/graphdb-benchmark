@@ -1,0 +1,491 @@
+-insert.product.commit=1, -insert.product.count=433000, -insert.product.measurementBatch=1000
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 433 iterations, single-shot each, 1000 calls per op
+# Timeout: 2 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.insert.product.ProductsInsertBenchmark.benchmark
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Iteration   1: 1.894 s/op
+Iteration   2: 0.816 s/op
+Iteration   3: 0.734 s/op
+Iteration   4: 0.652 s/op
+Iteration   5: 0.581 s/op
+Iteration   6: 0.728 s/op
+Iteration   7: 0.535 s/op
+Iteration   8: 0.393 s/op
+Iteration   9: 0.338 s/op
+Iteration  10: 0.331 s/op
+Iteration  11: 0.337 s/op
+Iteration  12: 0.335 s/op
+Iteration  13: 0.424 s/op
+Iteration  14: 0.394 s/op
+Iteration  15: 0.328 s/op
+Iteration  16: 0.356 s/op
+Iteration  17: 0.335 s/op
+Iteration  18: 0.361 s/op
+Iteration  19: 0.369 s/op
+Iteration  20: 0.318 s/op
+Iteration  21: 0.447 s/op
+Iteration  22: 0.332 s/op
+Iteration  23: 0.339 s/op
+Iteration  24: 0.300 s/op
+Iteration  25: 0.315 s/op
+Iteration  26: 0.319 s/op
+Iteration  27: 0.328 s/op
+Iteration  28: 0.306 s/op
+Iteration  29: 0.303 s/op
+Iteration  30: 0.322 s/op
+Iteration  31: 0.337 s/op
+Iteration  32: 0.410 s/op
+Iteration  33: 0.395 s/op
+Iteration  34: 0.417 s/op
+Iteration  35: 0.385 s/op
+Iteration  36: 0.731 s/op
+Iteration  37: 0.416 s/op
+Iteration  38: 0.464 s/op
+Iteration  39: 0.442 s/op
+Iteration  40: 0.571 s/op
+Iteration  41: 0.409 s/op
+Iteration  42: 0.354 s/op
+Iteration  43: 0.321 s/op
+Iteration  44: 0.337 s/op
+Iteration  45: 0.309 s/op
+Iteration  46: 0.367 s/op
+Iteration  47: 0.308 s/op
+Iteration  48: 0.318 s/op
+Iteration  49: 0.332 s/op
+Iteration  50: 0.312 s/op
+Iteration  51: 0.362 s/op
+Iteration  52: 0.284 s/op
+Iteration  53: 0.319 s/op
+Iteration  54: 0.330 s/op
+Iteration  55: 0.317 s/op
+Iteration  56: 0.339 s/op
+Iteration  57: 0.292 s/op
+Iteration  58: 0.357 s/op
+Iteration  59: 0.394 s/op
+Iteration  60: 0.323 s/op
+Iteration  61: 0.384 s/op
+Iteration  62: 0.342 s/op
+Iteration  63: 0.318 s/op
+Iteration  64: 0.388 s/op
+Iteration  65: 0.331 s/op
+Iteration  66: 0.408 s/op
+Iteration  67: 0.323 s/op
+Iteration  68: 0.311 s/op
+Iteration  69: 0.331 s/op
+Iteration  70: 0.325 s/op
+Iteration  71: 0.329 s/op
+Iteration  72: 0.355 s/op
+Iteration  73: 0.330 s/op
+Iteration  74: 0.505 s/op
+Iteration  75: 0.390 s/op
+Iteration  76: 0.408 s/op
+Iteration  77: 0.507 s/op
+Iteration  78: 0.429 s/op
+Iteration  79: 0.633 s/op
+Iteration  80: 0.309 s/op
+Iteration  81: 0.328 s/op
+Iteration  82: 0.376 s/op
+Iteration  83: 0.314 s/op
+Iteration  84: 0.327 s/op
+Iteration  85: 0.404 s/op
+Iteration  86: 0.319 s/op
+Iteration  87: 0.330 s/op
+Iteration  88: 0.390 s/op
+Iteration  89: 0.369 s/op
+Iteration  90: 0.429 s/op
+Iteration  91: 0.323 s/op
+Iteration  92: 0.338 s/op
+Iteration  93: 0.348 s/op
+Iteration  94: 0.483 s/op
+Iteration  95: 0.390 s/op
+Iteration  96: 0.437 s/op
+Iteration  97: 0.444 s/op
+Iteration  98: 0.449 s/op
+Iteration  99: 0.405 s/op
+Iteration 100: 0.537 s/op
+Iteration 101: 0.424 s/op
+Iteration 102: 0.419 s/op
+Iteration 103: 0.418 s/op
+Iteration 104: 0.390 s/op
+Iteration 105: 0.384 s/op
+Iteration 106: 0.423 s/op
+Iteration 107: 0.375 s/op
+Iteration 108: 0.527 s/op
+Iteration 109: 0.468 s/op
+Iteration 110: 0.421 s/op
+Iteration 111: 0.494 s/op
+Iteration 112: 0.406 s/op
+Iteration 113: 0.422 s/op
+Iteration 114: 0.386 s/op
+Iteration 115: 0.464 s/op
+Iteration 116: 0.415 s/op
+Iteration 117: 0.390 s/op
+Iteration 118: 0.658 s/op
+Iteration 119: 0.388 s/op
+Iteration 120: 0.459 s/op
+Iteration 121: 0.445 s/op
+Iteration 122: 0.411 s/op
+Iteration 123: 0.458 s/op
+Iteration 124: 0.452 s/op
+Iteration 125: 0.382 s/op
+Iteration 126: 0.383 s/op
+Iteration 127: 0.342 s/op
+Iteration 128: 0.342 s/op
+Iteration 129: 0.341 s/op
+Iteration 130: 0.326 s/op
+Iteration 131: 0.392 s/op
+Iteration 132: 0.325 s/op
+Iteration 133: 0.298 s/op
+Iteration 134: 0.409 s/op
+Iteration 135: 0.361 s/op
+Iteration 136: 0.415 s/op
+Iteration 137: 0.378 s/op
+Iteration 138: 0.394 s/op
+Iteration 139: 0.455 s/op
+Iteration 140: 0.414 s/op
+Iteration 141: 0.418 s/op
+Iteration 142: 0.552 s/op
+Iteration 143: 0.384 s/op
+Iteration 144: 0.463 s/op
+Iteration 145: 0.319 s/op
+Iteration 146: 0.360 s/op
+Iteration 147: 0.356 s/op
+Iteration 148: 0.312 s/op
+Iteration 149: 0.350 s/op
+Iteration 150: 0.317 s/op
+Iteration 151: 0.314 s/op
+Iteration 152: 0.341 s/op
+Iteration 153: 0.606 s/op
+Iteration 154: 0.460 s/op
+Iteration 155: 0.451 s/op
+Iteration 156: 0.557 s/op
+Iteration 157: 0.467 s/op
+Iteration 158: 0.331 s/op
+Iteration 159: 0.369 s/op
+Iteration 160: 0.505 s/op
+Iteration 161: 0.506 s/op
+Iteration 162: 0.449 s/op
+Iteration 163: 0.374 s/op
+Iteration 164: 0.483 s/op
+Iteration 165: 0.422 s/op
+Iteration 166: 0.402 s/op
+Iteration 167: 0.436 s/op
+Iteration 168: 0.424 s/op
+Iteration 169: 0.459 s/op
+Iteration 170: 0.402 s/op
+Iteration 171: 0.386 s/op
+Iteration 172: 0.420 s/op
+Iteration 173: 0.396 s/op
+Iteration 174: 0.488 s/op
+Iteration 175: 0.499 s/op
+Iteration 176: 0.400 s/op
+Iteration 177: 0.455 s/op
+Iteration 178: 0.431 s/op
+Iteration 179: 0.432 s/op
+Iteration 180: 0.488 s/op
+Iteration 181: 0.355 s/op
+Iteration 182: 0.420 s/op
+Iteration 183: 0.425 s/op
+Iteration 184: 0.376 s/op
+Iteration 185: 0.318 s/op
+Iteration 186: 0.314 s/op
+Iteration 187: 0.351 s/op
+Iteration 188: 0.342 s/op
+Iteration 189: 0.522 s/op
+Iteration 190: 0.516 s/op
+Iteration 191: 0.432 s/op
+Iteration 192: 0.443 s/op
+Iteration 193: 0.449 s/op
+Iteration 194: 0.422 s/op
+Iteration 195: 0.406 s/op
+Iteration 196: 0.444 s/op
+Iteration 197: 0.463 s/op
+Iteration 198: 0.581 s/op
+Iteration 199: 0.433 s/op
+Iteration 200: 0.477 s/op
+Iteration 201: 0.398 s/op
+Iteration 202: 0.411 s/op
+Iteration 203: 0.388 s/op
+Iteration 204: 0.438 s/op
+Iteration 205: 0.467 s/op
+Iteration 206: 0.330 s/op
+Iteration 207: 0.330 s/op
+Iteration 208: 0.570 s/op
+Iteration 209: 0.393 s/op
+Iteration 210: 0.353 s/op
+Iteration 211: 0.501 s/op
+Iteration 212: 0.399 s/op
+Iteration 213: 0.431 s/op
+Iteration 214: 0.428 s/op
+Iteration 215: 0.453 s/op
+Iteration 216: 0.494 s/op
+Iteration 217: 0.435 s/op
+Iteration 218: 0.483 s/op
+Iteration 219: 0.408 s/op
+Iteration 220: 0.512 s/op
+Iteration 221: 0.458 s/op
+Iteration 222: 0.393 s/op
+Iteration 223: 0.684 s/op
+Iteration 224: 1.584 s/op
+Iteration 225: 0.493 s/op
+Iteration 226: 0.375 s/op
+Iteration 227: 0.423 s/op
+Iteration 228: 0.473 s/op
+Iteration 229: 0.407 s/op
+Iteration 230: 0.491 s/op
+Iteration 231: 0.399 s/op
+Iteration 232: 0.529 s/op
+Iteration 233: 0.382 s/op
+Iteration 234: 0.384 s/op
+Iteration 235: 0.529 s/op
+Iteration 236: 0.419 s/op
+Iteration 237: 0.452 s/op
+Iteration 238: 0.407 s/op
+Iteration 239: 0.422 s/op
+Iteration 240: 0.471 s/op
+Iteration 241: 0.330 s/op
+Iteration 242: 0.369 s/op
+Iteration 243: 0.343 s/op
+Iteration 244: 0.320 s/op
+Iteration 245: 0.357 s/op
+Iteration 246: 0.362 s/op
+Iteration 247: 0.445 s/op
+Iteration 248: 0.476 s/op
+Iteration 249: 0.451 s/op
+Iteration 250: 0.445 s/op
+Iteration 251: 0.438 s/op
+Iteration 252: 0.512 s/op
+Iteration 253: 0.453 s/op
+Iteration 254: 0.420 s/op
+Iteration 255: 0.735 s/op
+Iteration 256: 0.416 s/op
+Iteration 257: 0.410 s/op
+Iteration 258: 0.484 s/op
+Iteration 259: 0.320 s/op
+Iteration 260: 0.320 s/op
+Iteration 261: 0.373 s/op
+Iteration 262: 0.391 s/op
+Iteration 263: 0.325 s/op
+Iteration 264: 0.374 s/op
+Iteration 265: 0.336 s/op
+Iteration 266: 0.341 s/op
+Iteration 267: 0.426 s/op
+Iteration 268: 0.350 s/op
+Iteration 269: 0.468 s/op
+Iteration 270: 0.428 s/op
+Iteration 271: 0.432 s/op
+Iteration 272: 0.398 s/op
+Iteration 273: 0.334 s/op
+Iteration 274: 0.424 s/op
+Iteration 275: 0.364 s/op
+Iteration 276: 0.381 s/op
+Iteration 277: 0.346 s/op
+Iteration 278: 0.370 s/op
+Iteration 279: 0.356 s/op
+Iteration 280: 0.341 s/op
+Iteration 281: 0.336 s/op
+Iteration 282: 0.416 s/op
+Iteration 283: 0.353 s/op
+Iteration 284: 0.749 s/op
+Iteration 285: 0.433 s/op
+Iteration 286: 0.461 s/op
+Iteration 287: 0.422 s/op
+Iteration 288: 0.400 s/op
+Iteration 289: 0.546 s/op
+Iteration 290: 0.431 s/op
+Iteration 291: 0.419 s/op
+Iteration 292: 0.420 s/op
+Iteration 293: 0.400 s/op
+Iteration 294: 0.525 s/op
+Iteration 295: 0.389 s/op
+Iteration 296: 0.421 s/op
+Iteration 297: 0.414 s/op
+Iteration 298: 0.401 s/op
+Iteration 299: 0.437 s/op
+Iteration 300: 0.373 s/op
+Iteration 301: 0.376 s/op
+Iteration 302: 0.465 s/op
+Iteration 303: 0.421 s/op
+Iteration 304: 0.458 s/op
+Iteration 305: 0.412 s/op
+Iteration 306: 0.390 s/op
+Iteration 307: 0.386 s/op
+Iteration 308: 0.440 s/op
+Iteration 309: 0.413 s/op
+Iteration 310: 0.439 s/op
+Iteration 311: 0.380 s/op
+Iteration 312: 0.419 s/op
+Iteration 313: 0.446 s/op
+Iteration 314: 0.458 s/op
+Iteration 315: 0.432 s/op
+Iteration 316: 0.427 s/op
+Iteration 317: 0.460 s/op
+Iteration 318: 0.390 s/op
+Iteration 319: 0.435 s/op
+Iteration 320: 0.405 s/op
+Iteration 321: 0.500 s/op
+Iteration 322: 0.475 s/op
+Iteration 323: 0.626 s/op
+Iteration 324: 0.441 s/op
+Iteration 325: 0.485 s/op
+Iteration 326: 0.422 s/op
+Iteration 327: 0.388 s/op
+Iteration 328: 0.399 s/op
+Iteration 329: 0.394 s/op
+Iteration 330: 0.459 s/op
+Iteration 331: 0.449 s/op
+Iteration 332: 0.395 s/op
+Iteration 333: 0.350 s/op
+Iteration 334: 0.351 s/op
+Iteration 335: 0.465 s/op
+Iteration 336: 0.456 s/op
+Iteration 337: 0.481 s/op
+Iteration 338: 0.415 s/op
+Iteration 339: 0.343 s/op
+Iteration 340: 0.379 s/op
+Iteration 341: 0.351 s/op
+Iteration 342: 0.343 s/op
+Iteration 343: 0.360 s/op
+Iteration 344: 0.329 s/op
+Iteration 345: 0.422 s/op
+Iteration 346: 0.324 s/op
+Iteration 347: 0.381 s/op
+Iteration 348: 0.351 s/op
+Iteration 349: 0.324 s/op
+Iteration 350: 0.474 s/op
+Iteration 351: 0.334 s/op
+Iteration 352: 0.326 s/op
+Iteration 353: 0.336 s/op
+Iteration 354: 0.348 s/op
+Iteration 355: 0.432 s/op
+Iteration 356: 0.331 s/op
+Iteration 357: 0.331 s/op
+Iteration 358: 0.377 s/op
+Iteration 359: 0.331 s/op
+Iteration 360: 0.367 s/op
+Iteration 361: 0.351 s/op
+Iteration 362: 0.435 s/op
+Iteration 363: 0.491 s/op
+Iteration 364: 0.417 s/op
+Iteration 365: 0.415 s/op
+Iteration 366: 0.402 s/op
+Iteration 367: 0.415 s/op
+Iteration 368: 0.425 s/op
+Iteration 369: 0.409 s/op
+Iteration 370: 0.417 s/op
+Iteration 371: 0.447 s/op
+Iteration 372: 0.434 s/op
+Iteration 373: 0.389 s/op
+Iteration 374: 0.398 s/op
+Iteration 375: 0.441 s/op
+Iteration 376: 0.528 s/op
+Iteration 377: 0.484 s/op
+Iteration 378: 0.427 s/op
+Iteration 379: 0.405 s/op
+Iteration 380: 0.523 s/op
+Iteration 381: 0.429 s/op
+Iteration 382: 0.467 s/op
+Iteration 383: 0.418 s/op
+Iteration 384: 0.439 s/op
+Iteration 385: 0.475 s/op
+Iteration 386: 0.410 s/op
+Iteration 387: 0.467 s/op
+Iteration 388: 0.454 s/op
+Iteration 389: 0.468 s/op
+Iteration 390: 0.393 s/op
+Iteration 391: 0.330 s/op
+Iteration 392: 0.348 s/op
+Iteration 393: 0.361 s/op
+Iteration 394: 0.448 s/op
+Iteration 395: 0.475 s/op
+Iteration 396: 0.424 s/op
+Iteration 397: 0.405 s/op
+Iteration 398: 0.322 s/op
+Iteration 399: 0.389 s/op
+Iteration 400: 0.677 s/op
+Iteration 401: 0.416 s/op
+Iteration 402: 0.418 s/op
+Iteration 403: 0.564 s/op
+Iteration 404: 0.526 s/op
+Iteration 405: 0.431 s/op
+Iteration 406: 0.455 s/op
+Iteration 407: 0.410 s/op
+Iteration 408: 0.475 s/op
+Iteration 409: 0.407 s/op
+Iteration 410: 0.439 s/op
+Iteration 411: 0.408 s/op
+Iteration 412: 0.360 s/op
+Iteration 413: 0.321 s/op
+Iteration 414: 0.368 s/op
+Iteration 415: 0.351 s/op
+Iteration 416: 0.323 s/op
+Iteration 417: 0.392 s/op
+Iteration 418: 0.434 s/op
+Iteration 419: 0.442 s/op
+Iteration 420: 0.424 s/op
+Iteration 421: 0.432 s/op
+Iteration 422: 0.457 s/op
+Iteration 423: 0.452 s/op
+Iteration 424: 0.387 s/op
+Iteration 425: 0.413 s/op
+Iteration 426: 0.475 s/op
+Iteration 427: 0.455 s/op
+Iteration 428: 0.397 s/op
+Iteration 429: 0.566 s/op
+Iteration 430: 0.517 s/op
+Iteration 431: 0.450 s/op
+Iteration 432: 0.419 s/op
+Iteration 433: 0.421 s/op
+
+Result "com.eaybars.benchmark.insert.product.ProductsInsertBenchmark.benchmark":
+  N = 433
+  mean =      0.420 ?(99.9%) 0.019 s/op
+
+  Histogram, s/op:
+    [0.000, 0.125) = 0
+    [0.125, 0.250) = 0
+    [0.250, 0.375) = 135
+    [0.375, 0.500) = 255
+    [0.500, 0.625) = 29
+    [0.625, 0.750) = 11
+    [0.750, 0.875) = 1
+    [0.875, 1.000) = 0
+    [1.000, 1.125) = 0
+    [1.125, 1.250) = 0
+    [1.250, 1.375) = 0
+    [1.375, 1.500) = 0
+    [1.500, 1.625) = 1
+    [1.625, 1.750) = 0
+    [1.750, 1.875) = 0
+
+  Percentiles, s/op:
+      p(0.0000) =      0.284 s/op
+     p(50.0000) =      0.409 s/op
+     p(90.0000) =      0.500 s/op
+     p(95.0000) =      0.559 s/op
+     p(99.0000) =      0.744 s/op
+     p(99.9000) =      1.894 s/op
+     p(99.9900) =      1.894 s/op
+     p(99.9990) =      1.894 s/op
+     p(99.9999) =      1.894 s/op
+    p(100.0000) =      1.894 s/op
+
+
+# Run complete. Total time: 00:07:16
+
+Benchmark                          Mode  Cnt  Score   Error  Units
+ProductsInsertBenchmark.benchmark    ss  433  0.420 ? 0.019   s/op

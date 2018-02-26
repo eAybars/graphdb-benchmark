@@ -1,0 +1,36 @@
+-insert.relatedProduct.commit=1, -insert.relatedProduct.count=433000, -insert.relatedProduct.measurementBatch=1000
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 433 iterations, single-shot each, 1000 calls per op
+# Timeout: 2 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark.benchmark
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+Iteration   1: 5741.578 s/op
+Iteration   2: 3996.960 s/op
+Iteration   3: 4647.546 s/op
+Iteration   4: 4684.042 s/op
+Iteration   5: 4971.369 s/op
+Iteration   6: 5257.564 s/op
+Iteration   7: 5166.298 s/op
+Iteration   8: 5455.085 s/op
+Iteration   9: 4606.350 s/op
+Iteration  10: 5313.839 s/op
+Iteration  11: 5633.754 s/op
+Iteration  12: 4881.420 s/op
+Iteration  13: 5648.797 s/op
+Iteration  14: 5518.110 s/op
+Iteration  15: 5950.543 s/op
+Iteration  16: 5649.151 s/op
+Iteration  17: 5409.783 s/op
+Iteration  18: 5415.757 s/op
+
+---------------------------------- terminated process --------------------------------
