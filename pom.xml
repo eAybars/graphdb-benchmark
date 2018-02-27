@@ -12,6 +12,7 @@
         <module>janusgraph</module>
         <module>orientdb</module>
         <module>tinker</module>
+        <module>neo4j</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: neo4j
+  labels:
+    app: neo4j
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: neo4j
+    spec:
+      containers:
+      - name: neo4j
+        image: neo4j:3.3.3
+        env:
+        - name: NEO4J_AUTH
+          value: none
+        ports:
+        - containerPort: 7687
+          name: binary
+        - containerPort: 7474
+          name: http
+        volumeMounts:
+        - name: neo4j-storage
+          mountPath: /data
+      volumes:
+          - hostPath:
+              path: "/tmp/neo4jdata"
+              type: DirectoryOrCreate
+            name: neo4j-storage
