@@ -1,0 +1,488 @@
+-insert.relatedProduct.commit=1, -insert.relatedProduct.count=433000, -insert.relatedProduct.measurementBatch=1000
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 433 iterations, single-shot each, 1000 calls per op
+# Timeout: 2 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark.benchmark
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+Iteration   1: 7.291 s/op
+Iteration   2: 3.885 s/op
+Iteration   3: 4.868 s/op
+Iteration   4: 5.234 s/op
+Iteration   5: 5.139 s/op
+Iteration   6: 5.461 s/op
+Iteration   7: 4.799 s/op
+Iteration   8: 5.260 s/op
+Iteration   9: 5.451 s/op
+Iteration  10: 5.198 s/op
+Iteration  11: 5.755 s/op
+Iteration  12: 5.166 s/op
+Iteration  13: 5.078 s/op
+Iteration  14: 6.135 s/op
+Iteration  15: 6.589 s/op
+Iteration  16: 5.739 s/op
+Iteration  17: 5.614 s/op
+Iteration  18: 5.775 s/op
+Iteration  19: 5.864 s/op
+Iteration  20: 5.249 s/op
+Iteration  21: 5.438 s/op
+Iteration  22: 5.750 s/op
+Iteration  23: 5.765 s/op
+Iteration  24: 5.380 s/op
+Iteration  25: 5.450 s/op
+Iteration  26: 5.197 s/op
+Iteration  27: 5.387 s/op
+Iteration  28: 6.078 s/op
+Iteration  29: 5.267 s/op
+Iteration  30: 5.308 s/op
+Iteration  31: 5.777 s/op
+Iteration  32: 6.416 s/op
+Iteration  33: 5.703 s/op
+Iteration  34: 4.786 s/op
+Iteration  35: 5.711 s/op
+Iteration  36: 5.833 s/op
+Iteration  37: 4.705 s/op
+Iteration  38: 5.678 s/op
+Iteration  39: 5.318 s/op
+Iteration  40: 6.135 s/op
+Iteration  41: 5.533 s/op
+Iteration  42: 5.996 s/op
+Iteration  43: 6.288 s/op
+Iteration  44: 5.430 s/op
+Iteration  45: 5.755 s/op
+Iteration  46: 6.025 s/op
+Iteration  47: 5.104 s/op
+Iteration  48: 5.710 s/op
+Iteration  49: 5.899 s/op
+Iteration  50: 5.345 s/op
+Iteration  51: 5.780 s/op
+Iteration  52: 6.310 s/op
+Iteration  53: 7.191 s/op
+Iteration  54: 7.113 s/op
+Iteration  55: 5.634 s/op
+Iteration  56: 5.808 s/op
+Iteration  57: 5.811 s/op
+Iteration  58: 5.422 s/op
+Iteration  59: 5.273 s/op
+Iteration  60: 5.954 s/op
+Iteration  61: 6.064 s/op
+Iteration  62: 6.037 s/op
+Iteration  63: 5.626 s/op
+Iteration  64: 6.195 s/op
+Iteration  65: 5.750 s/op
+Iteration  66: 5.110 s/op
+Iteration  67: 5.815 s/op
+Iteration  68: 6.596 s/op
+Iteration  69: 5.894 s/op
+Iteration  70: 5.154 s/op
+Iteration  71: 5.679 s/op
+Iteration  72: 6.145 s/op
+Iteration  73: 6.360 s/op
+Iteration  74: 5.864 s/op
+Iteration  75: 5.912 s/op
+Iteration  76: 5.449 s/op
+Iteration  77: 6.236 s/op
+Iteration  78: 5.482 s/op
+Iteration  79: 6.079 s/op
+Iteration  80: 6.214 s/op
+Iteration  81: 6.264 s/op
+Iteration  82: 6.177 s/op
+Iteration  83: 5.344 s/op
+Iteration  84: 5.723 s/op
+Iteration  85: 6.756 s/op
+Iteration  86: 5.477 s/op
+Iteration  87: 5.585 s/op
+Iteration  88: 5.610 s/op
+Iteration  89: 5.609 s/op
+Iteration  90: 6.011 s/op
+Iteration  91: 5.531 s/op
+Iteration  92: 6.514 s/op
+Iteration  93: 6.179 s/op
+Iteration  94: 5.691 s/op
+Iteration  95: 7.289 s/op
+Iteration  96: 6.510 s/op
+Iteration  97: 5.215 s/op
+Iteration  98: 6.594 s/op
+Iteration  99: 5.832 s/op
+Iteration 100: 5.629 s/op
+Iteration 101: 6.430 s/op
+Iteration 102: 5.661 s/op
+Iteration 103: 6.180 s/op
+Iteration 104: 5.556 s/op
+Iteration 105: 6.194 s/op
+Iteration 106: 6.806 s/op
+Iteration 107: 5.722 s/op
+Iteration 108: 5.607 s/op
+Iteration 109: 6.011 s/op
+Iteration 110: 6.433 s/op
+Iteration 111: 6.852 s/op
+Iteration 112: 7.439 s/op
+Iteration 113: 5.408 s/op
+Iteration 114: 6.482 s/op
+Iteration 115: 6.978 s/op
+Iteration 116: 5.951 s/op
+Iteration 117: 5.785 s/op
+Iteration 118: 5.989 s/op
+Iteration 119: 5.744 s/op
+Iteration 120: 7.405 s/op
+Iteration 121: 6.231 s/op
+Iteration 122: 6.245 s/op
+Iteration 123: 5.883 s/op
+Iteration 124: 6.355 s/op
+Iteration 125: 5.444 s/op
+Iteration 126: 5.965 s/op
+Iteration 127: 6.339 s/op
+Iteration 128: 5.641 s/op
+Iteration 129: 7.263 s/op
+Iteration 130: 6.335 s/op
+Iteration 131: 6.934 s/op
+Iteration 132: 6.555 s/op
+Iteration 133: 5.580 s/op
+Iteration 134: 7.122 s/op
+Iteration 135: 6.692 s/op
+Iteration 136: 7.520 s/op
+Iteration 137: 6.932 s/op
+Iteration 138: 6.742 s/op
+Iteration 139: 6.605 s/op
+Iteration 140: 6.414 s/op
+Iteration 141: 6.140 s/op
+Iteration 142: 6.690 s/op
+Iteration 143: 6.722 s/op
+Iteration 144: 6.691 s/op
+Iteration 145: 6.312 s/op
+Iteration 146: 7.528 s/op
+Iteration 147: 6.604 s/op
+Iteration 148: 6.581 s/op
+Iteration 149: 6.531 s/op
+Iteration 150: 6.472 s/op
+Iteration 151: 5.822 s/op
+Iteration 152: 5.916 s/op
+Iteration 153: 6.705 s/op
+Iteration 154: 6.952 s/op
+Iteration 155: 7.524 s/op
+Iteration 156: 6.387 s/op
+Iteration 157: 6.447 s/op
+Iteration 158: 6.835 s/op
+Iteration 159: 6.659 s/op
+Iteration 160: 7.168 s/op
+Iteration 161: 6.401 s/op
+Iteration 162: 6.974 s/op
+Iteration 163: 6.454 s/op
+Iteration 164: 6.672 s/op
+Iteration 165: 6.974 s/op
+Iteration 166: 6.213 s/op
+Iteration 167: 6.677 s/op
+Iteration 168: 7.147 s/op
+Iteration 169: 7.005 s/op
+Iteration 170: 6.546 s/op
+Iteration 171: 6.192 s/op
+Iteration 172: 7.269 s/op
+Iteration 173: 7.025 s/op
+Iteration 174: 6.409 s/op
+Iteration 175: 5.963 s/op
+Iteration 176: 5.927 s/op
+Iteration 177: 5.042 s/op
+Iteration 178: 6.863 s/op
+Iteration 179: 6.561 s/op
+Iteration 180: 6.911 s/op
+Iteration 181: 7.563 s/op
+Iteration 182: 6.462 s/op
+Iteration 183: 6.542 s/op
+Iteration 184: 6.837 s/op
+Iteration 185: 6.751 s/op
+Iteration 186: 6.574 s/op
+Iteration 187: 6.513 s/op
+Iteration 188: 6.794 s/op
+Iteration 189: 6.777 s/op
+Iteration 190: 6.577 s/op
+Iteration 191: 6.328 s/op
+Iteration 192: 6.434 s/op
+Iteration 193: 7.031 s/op
+Iteration 194: 6.616 s/op
+Iteration 195: 6.342 s/op
+Iteration 196: 6.427 s/op
+Iteration 197: 7.200 s/op
+Iteration 198: 6.274 s/op
+Iteration 199: 6.697 s/op
+Iteration 200: 7.430 s/op
+Iteration 201: 6.722 s/op
+Iteration 202: 5.619 s/op
+Iteration 203: 6.187 s/op
+Iteration 204: 7.143 s/op
+Iteration 205: 6.585 s/op
+Iteration 206: 6.325 s/op
+Iteration 207: 6.765 s/op
+Iteration 208: 6.515 s/op
+Iteration 209: 6.304 s/op
+Iteration 210: 7.338 s/op
+Iteration 211: 6.991 s/op
+Iteration 212: 7.292 s/op
+Iteration 213: 7.400 s/op
+Iteration 214: 6.447 s/op
+Iteration 215: 7.660 s/op
+Iteration 216: 6.504 s/op
+Iteration 217: 6.550 s/op
+Iteration 218: 6.187 s/op
+Iteration 219: 6.801 s/op
+Iteration 220: 6.927 s/op
+Iteration 221: 6.272 s/op
+Iteration 222: 6.582 s/op
+Iteration 223: 6.081 s/op
+Iteration 224: 7.014 s/op
+Iteration 225: 6.837 s/op
+Iteration 226: 5.630 s/op
+Iteration 227: 5.642 s/op
+Iteration 228: 6.372 s/op
+Iteration 229: 6.401 s/op
+Iteration 230: 6.489 s/op
+Iteration 231: 7.056 s/op
+Iteration 232: 6.567 s/op
+Iteration 233: 7.575 s/op
+Iteration 234: 7.429 s/op
+Iteration 235: 7.333 s/op
+Iteration 236: 7.299 s/op
+Iteration 237: 7.721 s/op
+Iteration 238: 7.018 s/op
+Iteration 239: 6.905 s/op
+Iteration 240: 6.742 s/op
+Iteration 241: 6.791 s/op
+Iteration 242: 6.735 s/op
+Iteration 243: 6.662 s/op
+Iteration 244: 7.225 s/op
+Iteration 245: 7.103 s/op
+Iteration 246: 6.662 s/op
+Iteration 247: 6.385 s/op
+Iteration 248: 6.916 s/op
+Iteration 249: 7.111 s/op
+Iteration 250: 5.509 s/op
+Iteration 251: 6.568 s/op
+Iteration 252: 7.243 s/op
+Iteration 253: 7.853 s/op
+Iteration 254: 7.396 s/op
+Iteration 255: 7.573 s/op
+Iteration 256: 6.667 s/op
+Iteration 257: 7.204 s/op
+Iteration 258: 8.097 s/op
+Iteration 259: 7.636 s/op
+Iteration 260: 7.431 s/op
+Iteration 261: 6.826 s/op
+Iteration 262: 7.408 s/op
+Iteration 263: 6.977 s/op
+Iteration 264: 7.835 s/op
+Iteration 265: 7.428 s/op
+Iteration 266: 7.185 s/op
+Iteration 267: 6.892 s/op
+Iteration 268: 7.275 s/op
+Iteration 269: 7.288 s/op
+Iteration 270: 7.033 s/op
+Iteration 271: 7.217 s/op
+Iteration 272: 5.802 s/op
+Iteration 273: 6.533 s/op
+Iteration 274: 6.910 s/op
+Iteration 275: 7.350 s/op
+Iteration 276: 7.869 s/op
+Iteration 277: 7.245 s/op
+Iteration 278: 7.346 s/op
+Iteration 279: 7.453 s/op
+Iteration 280: 7.123 s/op
+Iteration 281: 7.619 s/op
+Iteration 282: 7.570 s/op
+Iteration 283: 7.303 s/op
+Iteration 284: 7.800 s/op
+Iteration 285: 6.872 s/op
+Iteration 286: 7.846 s/op
+Iteration 287: 8.173 s/op
+Iteration 288: 7.220 s/op
+Iteration 289: 7.807 s/op
+Iteration 290: 6.746 s/op
+Iteration 291: 7.745 s/op
+Iteration 292: 6.236 s/op
+Iteration 293: 6.221 s/op
+Iteration 294: 7.785 s/op
+Iteration 295: 6.653 s/op
+Iteration 296: 7.394 s/op
+Iteration 297: 8.161 s/op
+Iteration 298: 8.047 s/op
+Iteration 299: 7.350 s/op
+Iteration 300: 7.957 s/op
+Iteration 301: 8.111 s/op
+Iteration 302: 8.712 s/op
+Iteration 303: 7.756 s/op
+Iteration 304: 7.309 s/op
+Iteration 305: 7.917 s/op
+Iteration 306: 8.248 s/op
+Iteration 307: 7.325 s/op
+Iteration 308: 7.962 s/op
+Iteration 309: 7.552 s/op
+Iteration 310: 7.947 s/op
+Iteration 311: 7.701 s/op
+Iteration 312: 6.828 s/op
+Iteration 313: 7.099 s/op
+Iteration 314: 7.261 s/op
+Iteration 315: 8.047 s/op
+Iteration 316: 8.183 s/op
+Iteration 317: 8.377 s/op
+Iteration 318: 7.437 s/op
+Iteration 319: 7.495 s/op
+Iteration 320: 7.938 s/op
+Iteration 321: 8.133 s/op
+Iteration 322: 7.128 s/op
+Iteration 323: 8.094 s/op
+Iteration 324: 7.665 s/op
+Iteration 325: 8.626 s/op
+Iteration 326: 7.590 s/op
+Iteration 327: 7.827 s/op
+Iteration 328: 7.774 s/op
+Iteration 329: 7.496 s/op
+Iteration 330: 7.583 s/op
+Iteration 331: 8.116 s/op
+Iteration 332: 7.933 s/op
+Iteration 333: 8.338 s/op
+Iteration 334: 9.616 s/op
+Iteration 335: 8.189 s/op
+Iteration 336: 8.419 s/op
+Iteration 337: 7.831 s/op
+Iteration 338: 8.212 s/op
+Iteration 339: 7.435 s/op
+Iteration 340: 7.076 s/op
+Iteration 341: 6.942 s/op
+Iteration 342: 7.559 s/op
+Iteration 343: 6.794 s/op
+Iteration 344: 6.174 s/op
+Iteration 345: 7.505 s/op
+Iteration 346: 5.944 s/op
+Iteration 347: 6.435 s/op
+Iteration 348: 6.334 s/op
+Iteration 349: 5.945 s/op
+Iteration 350: 6.702 s/op
+Iteration 351: 6.027 s/op
+Iteration 352: 6.463 s/op
+Iteration 353: 6.073 s/op
+Iteration 354: 5.471 s/op
+Iteration 355: 6.220 s/op
+Iteration 356: 6.034 s/op
+Iteration 357: 6.329 s/op
+Iteration 358: 6.236 s/op
+Iteration 359: 7.296 s/op
+Iteration 360: 6.483 s/op
+Iteration 361: 7.490 s/op
+Iteration 362: 7.021 s/op
+Iteration 363: 6.781 s/op
+Iteration 364: 7.108 s/op
+Iteration 365: 6.339 s/op
+Iteration 366: 8.614 s/op
+Iteration 367: 7.663 s/op
+Iteration 368: 6.971 s/op
+Iteration 369: 8.450 s/op
+Iteration 370: 7.341 s/op
+Iteration 371: 7.712 s/op
+Iteration 372: 7.663 s/op
+Iteration 373: 7.167 s/op
+Iteration 374: 7.198 s/op
+Iteration 375: 7.489 s/op
+Iteration 376: 8.417 s/op
+Iteration 377: 8.230 s/op
+Iteration 378: 8.656 s/op
+Iteration 379: 8.410 s/op
+Iteration 380: 7.881 s/op
+Iteration 381: 8.876 s/op
+Iteration 382: 7.968 s/op
+Iteration 383: 8.323 s/op
+Iteration 384: 8.845 s/op
+Iteration 385: 9.117 s/op
+Iteration 386: 8.417 s/op
+Iteration 387: 7.075 s/op
+Iteration 388: 8.873 s/op
+Iteration 389: 8.970 s/op
+Iteration 390: 7.470 s/op
+Iteration 391: 9.112 s/op
+Iteration 392: 9.061 s/op
+Iteration 393: 8.180 s/op
+Iteration 394: 8.340 s/op
+Iteration 395: 9.147 s/op
+Iteration 396: 9.501 s/op
+Iteration 397: 9.524 s/op
+Iteration 398: 9.662 s/op
+Iteration 399: 9.544 s/op
+Iteration 400: 9.450 s/op
+Iteration 401: 10.863 s/op
+Iteration 402: 11.041 s/op
+Iteration 403: 12.065 s/op
+Iteration 404: 13.140 s/op
+Iteration 405: 10.970 s/op
+Iteration 406: 11.726 s/op
+Iteration 407: 12.979 s/op
+Iteration 408: 13.126 s/op
+Iteration 409: 14.893 s/op
+Iteration 410: 12.552 s/op
+Iteration 411: 13.210 s/op
+Iteration 412: 14.343 s/op
+Iteration 413: 14.908 s/op
+Iteration 414: 12.146 s/op
+Iteration 415: 12.094 s/op
+Iteration 416: 13.776 s/op
+Iteration 417: 13.945 s/op
+Iteration 418: 13.733 s/op
+Iteration 419: 12.224 s/op
+Iteration 420: 12.230 s/op
+Iteration 421: 13.977 s/op
+Iteration 422: 15.123 s/op
+Iteration 423: 13.876 s/op
+Iteration 424: 13.868 s/op
+Iteration 425: 13.289 s/op
+Iteration 426: 13.781 s/op
+Iteration 427: 14.613 s/op
+Iteration 428: 12.865 s/op
+Iteration 429: 13.947 s/op
+Iteration 430: 12.339 s/op
+Iteration 431: 13.479 s/op
+Iteration 432: 14.170 s/op
+Iteration 433: 11.040 s/op
+
+Result "com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark.benchmark":
+  N = 433
+  mean =      7.233 ?(99.9%) 0.312 s/op
+
+  Histogram, s/op:
+    [ 0.000,  1.250) = 0
+    [ 1.250,  2.500) = 0
+    [ 2.500,  3.750) = 0
+    [ 3.750,  5.000) = 5
+    [ 5.000,  6.250) = 126
+    [ 6.250,  7.500) = 186
+    [ 7.500,  8.750) = 69
+    [ 8.750, 10.000) = 14
+    [10.000, 11.250) = 4
+    [11.250, 12.500) = 7
+    [12.500, 13.750) = 9
+    [13.750, 15.000) = 12
+    [15.000, 16.250) = 1
+    [16.250, 17.500) = 0
+    [17.500, 18.750) = 0
+
+  Percentiles, s/op:
+      p(0.0000) =      3.885 s/op
+     p(50.0000) =      6.765 s/op
+     p(90.0000) =      9.025 s/op
+     p(95.0000) =     12.646 s/op
+     p(99.0000) =     14.521 s/op
+     p(99.9000) =     15.123 s/op
+     p(99.9900) =     15.123 s/op
+     p(99.9990) =     15.123 s/op
+     p(99.9999) =     15.123 s/op
+    p(100.0000) =     15.123 s/op
+
+
+# Run complete. Total time: 00:54:51
+
+Benchmark                                 Mode  Cnt  Score   Error  Units
+RelatedProductsInsertBenchmark.benchmark    ss  433  7.233 ? 0.312   s/op
