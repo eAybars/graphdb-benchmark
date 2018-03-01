@@ -5,6 +5,7 @@ import com.eaybars.benchmark.insert.product.ProductsInsertBenchmark;
 import com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark;
 import com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark;
 import com.eaybars.benchmark.query.simple.CategoriesAUserLikes;
+import com.eaybars.benchmark.query.simple.PeopleAUserIsAlike;
 import com.eaybars.benchmark.query.simple.ReviewsBetween;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 
@@ -33,6 +34,8 @@ public class GraphBenchmarkExecutor {
                 .ifPresent(BenchmarkRunnerConsumer.forBenchmark(ReviewsBetween.class));
         ARGUMENTS.queryBenchmarkFromArguments("caul")
                 .ifPresent(BenchmarkRunnerConsumer.forBenchmark(CategoriesAUserLikes.class));
+        ARGUMENTS.queryBenchmarkFromArguments("pauia")
+                .ifPresent(BenchmarkRunnerConsumer.forBenchmark(PeopleAUserIsAlike.class));
 
     }
 
