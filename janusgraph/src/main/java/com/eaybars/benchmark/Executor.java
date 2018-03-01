@@ -5,7 +5,7 @@ import com.eaybars.benchmark.graph.JanusGraphSupplier;
 public class Executor {
 
     public static void main(String[] args) throws Exception {
-        ExecutorDelegation.GRAPH_SUPPLIER_CLASS = JanusGraphSupplier.class;
-        ExecutorDelegation.main(args);
+        GraphBenchmarkExecutor.GRAPH_SUPPLIER_CLASS = JanusGraphSupplier.class;
+        GraphBenchmarkExecutor.main(args);
     }
 }

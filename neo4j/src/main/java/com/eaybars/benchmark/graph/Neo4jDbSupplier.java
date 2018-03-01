@@ -25,6 +25,7 @@ public class Neo4jDbSupplier implements Supplier<GraphTraversalSource> {
         session.run("CREATE INDEX ON :product(productId)");
         session.run("CREATE INDEX ON :product(price)");
         session.run("CREATE INDEX ON :category(categoryName)");
+        session.close();
         final Neo4JElementIdProvider<?> vertexIdProvider = new Neo4JNativeElementIdProvider();
         final Neo4JElementIdProvider<?> edgeIdProvider = new Neo4JNativeElementIdProvider();
         final Neo4JGraph neo4JGraph = new Neo4JGraph(driver, vertexIdProvider, edgeIdProvider);

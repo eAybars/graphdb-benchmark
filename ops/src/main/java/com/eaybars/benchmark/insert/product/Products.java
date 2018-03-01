@@ -21,7 +21,6 @@ public class Products {
     private Insert.Options options;
     private BufferedReader reader;
     private JsonObject object;
-    private int count;
 
     private Set<String> alsoViewed;
     private Set<String> buyAfterViewing;
@@ -29,7 +28,7 @@ public class Products {
 
     @Setup(Level.Trial)
     public void setUp() throws IOException {
-        options = Insert.currentInsertOptions();
+        options = Insert.currentOptions();
         reader = new BufferedReader(new InputStreamReader(options.getSource().inputStream()));
         for (int i = 0; i < options.getStartFrom(); i++) {
             next();
@@ -53,7 +52,6 @@ public class Products {
                 alsoViewed = collectRelatedProducts("also_viewed");
                 buyAfterViewing = collectRelatedProducts("buy_after_viewing");
                 categories = collectCategories();
-                count++;
                 parsed = true;
             } catch (JsonParsingException e) {
                 parsed = false;
@@ -106,11 +104,4 @@ public class Products {
         return buyAfterViewing;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public int getCommitInterval() {
-        return options.getCommitInterval();
-    }
 }

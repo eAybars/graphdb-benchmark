@@ -37,6 +37,6 @@ spec:
           - "-insert.review.commit=20"
           - "-insert.review.count=982000"
           - "-insert.review.measurementBatch=1000"
-          - "-query.mrrtbl=5"
-          - "-query.rpp=5"
-          - "-query.mpc=5"
+          - "-query.rb=5"
+          - "-query.caul=5"
+

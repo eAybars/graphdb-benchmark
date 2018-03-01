@@ -9,22 +9,54 @@ import java.util.function.Supplier;
 public class GraphSupplier {
     public static final String GRAPH_SUPPLIER_CLASS_PROPERTY = "GraphSupplier.supplier.class";
     private GraphTraversalSource g;
+    private Transaction.Options options;
+    private int count;
+    private int lastCommit;
 
     @Setup(Level.Trial)
     public void setUp() throws Exception {
-        g = ((Supplier<GraphTraversalSource>)Class.forName(
+        options = Transaction.currentOptions();
+        initGraph();
+    }
+
+    private void initGraph() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        g = ((Supplier<GraphTraversalSource>) Class.forName(
                 System.getProperty(GRAPH_SUPPLIER_CLASS_PROPERTY)).newInstance()).get();
+    }
+
+    @Setup(Level.Invocation)
+    public void next() throws Exception {
+        if (options.getGraphReinitialisationPeriod() > 0 &&
+                count > 0 && count % options.getGraphReinitialisationPeriod() == 0) {
+            tearDown();
+            initGraph();
+        } else if (options.getCommitInterval() > 0 && count > 0 &&
+                (options.getCommitInterval() == 1 || count % options.getCommitInterval() == 0)) {
+            try {
+                lastCommit = count;
+                g.getGraph().tx().commit();
+            } catch (Exception e) {
+            }
+        }
+        count++;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     @TearDown(Level.Trial)
     public void tearDown() throws Exception {
         try {
-            g.getGraph().tx().commit();
-        } catch (Exception e) {}
-        finally {
+            if (options.getCommitInterval() > 0 && lastCommit < count) {
+                g.getGraph().tx().commit();
+            }
+        } catch (Exception e) {
+        } finally {
             g.getGraph().close();
         }
     }
+
 
     public GraphTraversalSource traversalSource() {
         return g;

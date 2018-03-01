@@ -39,11 +39,5 @@ public class RelatedProductsInsertBenchmark {
             }
         }
 
-        if (products.getCommitInterval() == 1 || products.getCount() % products.getCommitInterval() == 0) {
-            try {
-                g.getGraph().tx().commit();
-            } catch (Exception e) {
-            }
-        }
     }
 }

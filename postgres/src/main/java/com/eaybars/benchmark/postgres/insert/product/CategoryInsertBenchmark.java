@@ -21,11 +21,5 @@ public class CategoryInsertBenchmark {
         JsonObject object = products.getObject();
         //TODO add insert code
 
-        if (products.getCommitInterval() == 1 || products.getCount() % products.getCommitInterval() == 0) {
-            try {
-                connection.commit();
-            } catch (Exception e) {
-            }
-        }
     }
 }

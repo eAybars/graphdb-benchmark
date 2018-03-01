@@ -21,11 +21,5 @@ public class ReviewsInsertBenchmark {
         JsonObject object = reviews.getObject();
         //TODO add insert code
 
-        if (reviews.getCommitInterval() == 1 || reviews.getCount() % reviews.getCommitInterval() == 0) {
-            try {
-                connection.commit();
-            } catch (Exception e) {
-            }
-        }
     }
 }

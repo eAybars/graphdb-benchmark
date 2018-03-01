@@ -15,11 +15,10 @@ public class Reviews {
     private Insert.Options options;
     private BufferedReader reader;
     private JsonObject object;
-    private int count;
 
     @Setup(Level.Trial)
     public void setUp() throws IOException {
-        options = Insert.currentInsertOptions();
+        options = Insert.currentOptions();
         reader = new BufferedReader(new InputStreamReader(options.getSource().inputStream()));
         for (int i = 0; i < options.getStartFrom(); i++) {
             next();
@@ -29,7 +28,6 @@ public class Reviews {
     @Setup(Level.Invocation)
     public void next() throws IOException {
         object = Json.createReader(new StringReader(reader.readLine())).readObject();
-        count++;
     }
 
     @TearDown(Level.Trial)
@@ -41,11 +39,4 @@ public class Reviews {
         return object;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public int getCommitInterval() {
-        return options.getCommitInterval();
-    }
 }

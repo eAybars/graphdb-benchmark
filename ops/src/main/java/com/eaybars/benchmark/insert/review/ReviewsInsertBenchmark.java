@@ -50,12 +50,6 @@ public class ReviewsInsertBenchmark {
         user.addEdge("created", review, "unixReviewTime", object.getJsonNumber("unixReviewTime").longValue());
         review.addEdge("about", product);
 
-        if (is.getCommitInterval() == 1 || is.getCount() % is.getCommitInterval() == 0) {
-            try {
-                g.getGraph().tx().commit();
-            } catch (Exception e) {
-            }
-        }
     }
 
 }

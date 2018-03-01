@@ -1,7 +1,9 @@
 package com.eaybars.benchmark.insert;
 
-import com.eaybars.benchmark.ExecutorDelegation;
+import com.eaybars.benchmark.Arguments;
+import com.eaybars.benchmark.BenchmarkRunner;
 import com.eaybars.benchmark.Information;
+import com.eaybars.benchmark.Transaction;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
@@ -9,9 +11,10 @@ import org.openjdk.jmh.runner.options.TimeValue;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class Insert implements Serializable, Cloneable {
+public class Insert implements BenchmarkRunner {
     private static final String CURRENT_OPTIONS_NAME = "com.eaybars.benchmark.graph.insert.currentoptions";
     private Options options = new Options();
+    private Transaction transaction = new Transaction();
 
     public static Insert fromFile(String file) {
         Insert insert = new Insert();
@@ -29,7 +32,7 @@ public class Insert implements Serializable, Cloneable {
     }
 
     public Insert commitInterval(int interval) {
-        this.options.commitInterval = interval;
+        this.transaction.withCommitInterval(interval);
         return this;
     }
 
@@ -48,7 +51,12 @@ public class Insert implements Serializable, Cloneable {
         return this;
     }
 
-    public static Options currentInsertOptions() {
+    public Insert reinitialisePeriod(int period) {
+        this.transaction.reinitialisePeriod(period);
+        return this;
+    }
+
+    public static Options currentOptions() {
         try {
             return Information.BROKER.load(Options.class, System.getProperty(CURRENT_OPTIONS_NAME, "~none"));
         } catch (IOException e) {
@@ -67,10 +75,11 @@ public class Insert implements Serializable, Cloneable {
 
         Options clone = options.clone();
 
-        String name = benchmarkClass.getName() + ".Options";
+        String name = benchmarkClass.getName() + ".Insert.Options";
         System.setProperty(CURRENT_OPTIONS_NAME, name);
 
         Information.BROKER.save(name, clone);
+        transaction.done(benchmarkClass);
 
         int excess = Math.max(clone.startFrom + clone.insertCount - clone.source.getNumberOfLines(), 0);
 
@@ -82,7 +91,7 @@ public class Insert implements Serializable, Cloneable {
                 .timeout(TimeValue.hours(2))
                 .measurementIterations(iterationCount)
                 .measurementBatchSize(clone.measurementBatchSize)
-                .forks(ExecutorDelegation.forks())
+                .forks(Arguments.forks())
                 .build();
 
         new Runner(build).run();
@@ -90,17 +99,12 @@ public class Insert implements Serializable, Cloneable {
 
     public static class Options implements Serializable, Cloneable {
         private InsertSource source;
-        private int commitInterval;
         private int measurementBatchSize;
         private int insertCount;
         private int startFrom;
 
         public InsertSource getSource() {
             return source;
-        }
-
-        public int getCommitInterval() {
-            return commitInterval;
         }
 
         public int getMeasurementBatchSize() {
