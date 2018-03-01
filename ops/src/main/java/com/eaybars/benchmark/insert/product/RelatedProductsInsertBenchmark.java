@@ -37,7 +37,9 @@ public class RelatedProductsInsertBenchmark {
                 g.V().hasLabel("product").has("productId", P.within(products.getBuyAfterViewing()))
                         .addE("buy_after_viewing").from(product).count().next();
             }
-        }
 
+            //include commit time in the measurement
+            graphSupplier.commit();
+        }
     }
 }

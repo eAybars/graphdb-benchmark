@@ -17,8 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class ReviewsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(GraphSupplier graph, Reviews is) {
-        GraphTraversalSource g = graph.traversalSource();
+    public void benchmark(GraphSupplier graphSupplier, Reviews is) {
+        GraphTraversalSource g = graphSupplier.traversalSource();
         JsonObject object = is.getObject();
 
         Vertex review = g.getGraph().addVertex("review");
@@ -50,6 +50,8 @@ public class ReviewsInsertBenchmark {
         user.addEdge("created", review, "unixReviewTime", object.getJsonNumber("unixReviewTime").longValue());
         review.addEdge("about", product);
 
+        //include commit time in the measurement
+        graphSupplier.commit();
     }
 
 }

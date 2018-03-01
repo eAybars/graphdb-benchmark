@@ -28,5 +28,7 @@ public class ProductsInsertBenchmark {
                 .property("imUrl", object.getString("imUrl", ""))
                 .next();
 
+        //include commit time in the measurement
+        graphSupplier.commit();
     }
 }

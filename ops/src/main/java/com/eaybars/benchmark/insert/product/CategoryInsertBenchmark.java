@@ -39,6 +39,8 @@ public class CategoryInsertBenchmark {
                     }
                 }
             }
+            //include commit time in the measurement
+            graphSupplier.commit();
         }
     }
 }

@@ -30,13 +30,8 @@ public class GraphSupplier {
                 count > 0 && count % options.getGraphReinitialisationPeriod() == 0) {
             tearDown();
             initGraph();
-        } else if (options.getCommitInterval() > 0 && count > 0 &&
-                (options.getCommitInterval() == 1 || count % options.getCommitInterval() == 0)) {
-            try {
-                lastCommit = count;
-                g.getGraph().tx().commit();
-            } catch (Exception e) {
-            }
+        } else {
+            commit();
         }
         count++;
     }
@@ -54,6 +49,17 @@ public class GraphSupplier {
         } catch (Exception e) {
         } finally {
             g.getGraph().close();
+        }
+    }
+
+    public void commit() {
+        if (options.getCommitInterval() > 0 && count > 0 && lastCommit < count &&
+                (options.getCommitInterval() == 1 || count % options.getCommitInterval() == 0)) {
+            try {
+                lastCommit = count;
+                g.getGraph().tx().commit();
+            } catch (Exception e) {
+            }
         }
     }
 
