@@ -46,7 +46,7 @@ public class PeopleAUserIsAlike {
                 .order().by(out("created").out("about").where(eq("products")).count(), Order.decr)
                 .toList();
         try {
-            Information.BENCHMARK_RESULT.put("PeopleAUserIsAlike-"+graphSupplier.getCount(), result.size());
+            Information.BENCHMARK_RESULT.put("PeopleAUserIsAlike", result.size());
         } catch (IOException e) {
         }
         return result;
@@ -54,7 +54,6 @@ public class PeopleAUserIsAlike {
 
     @TearDown
     public void saveResults() throws IOException {
-        Information.BENCHMARK_RESULT.getBuffer().forEach((name, data) -> System.out.println(name+": "+data));
         Information.BENCHMARK_RESULT.flush();
     }
 }

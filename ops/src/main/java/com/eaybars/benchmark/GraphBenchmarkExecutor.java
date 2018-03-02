@@ -37,6 +37,9 @@ public class GraphBenchmarkExecutor {
         ARGUMENTS.queryBenchmarkFromArguments("pauia")
                 .ifPresent(BenchmarkRunnerConsumer.forBenchmark(PeopleAUserIsAlike.class));
 
+        System.out.println();
+        System.out.println("Benchmark results: ");
+        Information.BENCHMARK_RESULT.objects().forEachRemaining(e -> System.out.println(e.getKey()+": "+e.getValue()));
     }
 
 

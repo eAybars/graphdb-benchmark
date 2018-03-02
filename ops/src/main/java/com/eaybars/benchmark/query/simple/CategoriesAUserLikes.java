@@ -37,7 +37,7 @@ public class CategoriesAUserLikes {
                 .dedup()
                 .toList();
         try {
-            Information.BENCHMARK_RESULT.put("CategoriesAUserLikes-"+graphSupplier.getCount(), result.size());
+            Information.BENCHMARK_RESULT.put("CategoriesAUserLikes", result.size());
         } catch (IOException e) {
         }
         return result;
@@ -45,7 +45,6 @@ public class CategoriesAUserLikes {
 
     @TearDown
     public void saveResults() throws IOException {
-        Information.BENCHMARK_RESULT.getBuffer().forEach((name, data) -> System.out.println(name+": "+data));
         Information.BENCHMARK_RESULT.flush();
     }
 

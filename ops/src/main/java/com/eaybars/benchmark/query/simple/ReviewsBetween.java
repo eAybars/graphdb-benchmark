@@ -30,7 +30,7 @@ public class ReviewsBetween {
                 .has("unixReviewTime", P.between(start, end))
                 .toList();
         try {
-            Information.BENCHMARK_RESULT.put("ReviewsBetween-"+graphSupplier.getCount(), results.size());
+            Information.BENCHMARK_RESULT.put("ReviewsBetween", results.size());
         } catch (IOException e) {
         }
         return results;
@@ -38,7 +38,6 @@ public class ReviewsBetween {
 
     @TearDown
     public void saveResults() throws IOException {
-        Information.BENCHMARK_RESULT.getBuffer().forEach((name, data) -> System.out.println(name+": "+data));
         Information.BENCHMARK_RESULT.flush();
     }
 

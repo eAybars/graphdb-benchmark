@@ -7,10 +7,7 @@ import java.util.*;
 public enum Information {
 
     TEMPORARY(temp(), false),
-    BENCHMARK_RESULT(new File(
-            Optional.ofNullable(System.getenv("BENCHMARK_RESULT_DIR"))
-                    .orElse(System.getProperty("user.home") + File.separator + "benchmark-results")
-    ), true);
+    BENCHMARK_RESULT(benchmarks(), true);
 
     private File parentFolder;
     private Map<String, Serializable> buffer;
@@ -26,6 +23,17 @@ public enum Information {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static File benchmarks() {
+        File file = System.getenv("BENCHMARK_RESULT_DIR") == null ?
+                temp() : new File(System.getenv("BENCHMARK_RESULT_DIR"));
+        if (!file.exists()) {
+            if (!file.mkdir()) {
+                throw new RuntimeException("Cannot create folder for benchmark results at: "+file.getAbsolutePath());
+            }
+        }
+        return file;
     }
 
     public void save(Serializable object) throws IOException {
@@ -80,7 +88,31 @@ public enum Information {
         }
     }
 
-    public Map<String, Serializable> getBuffer() {
-        return buffer;
+    public Iterator<Map.Entry<String, Serializable>> objects() {
+        File[] files = parentFolder.listFiles();
+        if (files == null) {
+            return Collections.emptyIterator();
+        }
+
+        return new Iterator<Map.Entry<String, Serializable>>() {
+            int index = -1;
+
+            @Override
+            public boolean hasNext() {
+                return index + 1 < files.length;
+            }
+
+            @Override
+            public Map.Entry<String, Serializable> next() {
+                index++;
+                try {
+                    return new AbstractMap.SimpleImmutableEntry<>(files[index].getName(),
+                            load(Serializable.class, files[index].getName()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
     }
+
 }
