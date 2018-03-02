@@ -18,6 +18,8 @@ spec:
         env:
           - name: JMH_FORK
             value: "0"
+          - name: BENCHMARK_RESULT_DIR
+            value: "/tmp/"
           - name: JAVA_OPTIONS
             value: "-Xms512m -Xmx512m"
         args:
@@ -39,4 +41,5 @@ spec:
           - "-insert.review.measurementBatch=1000"
           - "-query.rb=5"
           - "-query.caul=5"
+          - "-query.pauia=5"
 

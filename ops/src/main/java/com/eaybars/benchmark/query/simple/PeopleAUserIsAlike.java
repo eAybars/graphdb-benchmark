@@ -1,6 +1,7 @@
 package com.eaybars.benchmark.query.simple;
 
 import com.eaybars.benchmark.GraphSupplier;
+import com.eaybars.benchmark.Information;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
@@ -8,6 +9,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.openjdk.jmh.annotations.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -31,7 +33,7 @@ public class PeopleAUserIsAlike {
     @Benchmark
     public List<Vertex> query(GraphSupplier graphSupplier) {
         GraphTraversalSource g = graphSupplier.traversalSource();
-        return g.V().hasLabel("person")
+        List<Vertex> result = g.V().hasLabel("person")
                 .has("reviewerID", id)
                 .as("user")
                 .out("created")//to review
@@ -43,7 +45,16 @@ public class PeopleAUserIsAlike {
                 .dedup()
                 .order().by(out("created").out("about").where(eq("products")).count(), Order.decr)
                 .toList();
+        try {
+            Information.BENCHMARK_RESULT.put("PeopleAUserIsAlike-"+graphSupplier.getCount(), result.size());
+        } catch (IOException e) {
+        }
+        return result;
     }
 
-
+    @TearDown
+    public void saveResults() throws IOException {
+        Information.BENCHMARK_RESULT.getBuffer().forEach((name, data) -> System.out.println(name+": "+data));
+        Information.BENCHMARK_RESULT.flush();
+    }
 }

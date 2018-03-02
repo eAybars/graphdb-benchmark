@@ -58,7 +58,7 @@ public class Insert implements BenchmarkRunner {
 
     public static Options currentOptions() {
         try {
-            return Information.BROKER.load(Options.class, System.getProperty(CURRENT_OPTIONS_NAME, "~none"));
+            return Information.TEMPORARY.load(Options.class, System.getProperty(CURRENT_OPTIONS_NAME, "~none"));
         } catch (IOException e) {
             return null;
         }
@@ -78,7 +78,7 @@ public class Insert implements BenchmarkRunner {
         String name = benchmarkClass.getName() + ".Insert.Options";
         System.setProperty(CURRENT_OPTIONS_NAME, name);
 
-        Information.BROKER.save(name, clone);
+        Information.TEMPORARY.save(name, clone);
         transaction.done(benchmarkClass);
 
         int excess = Math.max(clone.startFrom + clone.insertCount - clone.source.getNumberOfLines(), 0);

@@ -20,7 +20,7 @@ public class Transaction {
 
     public static Transaction.Options currentOptions() {
         try {
-            return Information.BROKER.load(Transaction.Options.class, System.getProperty(CURRENT_OPTIONS_NAME, "~none"));
+            return Information.TEMPORARY.load(Transaction.Options.class, System.getProperty(CURRENT_OPTIONS_NAME, "~none"));
         } catch (IOException e) {
             return null;
         }
@@ -33,7 +33,7 @@ public class Transaction {
         String name = benchmarkClass.getName() + ".Transaction.Options";
         System.setProperty(CURRENT_OPTIONS_NAME, name);
 
-        Information.BROKER.save(name, clone);
+        Information.TEMPORARY.save(name, clone);
     }
 
 
