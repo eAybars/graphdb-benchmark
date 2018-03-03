@@ -44,9 +44,8 @@ public class GraphSupplier {
     public void tearDown() throws Exception {
         try {
             if (options.getCommitInterval() > 0 && lastCommit < count) {
-                g.getGraph().tx().commit();
+                doCommit();
             }
-        } catch (Exception e) {
         } finally {
             g.getGraph().close();
         }
@@ -55,11 +54,14 @@ public class GraphSupplier {
     public void commit() {
         if (options.getCommitInterval() > 0 && count > 0 && lastCommit < count &&
                 (options.getCommitInterval() == 1 || count % options.getCommitInterval() == 0)) {
-            try {
-                lastCommit = count;
-                g.getGraph().tx().commit();
-            } catch (Exception e) {
-            }
+            doCommit();
+        }
+    }
+
+    private void doCommit() {
+        if (g.getGraph().features().graph().supportsTransactions()) {
+            g.getGraph().tx().commit();
+            lastCommit = count;
         }
     }
 
