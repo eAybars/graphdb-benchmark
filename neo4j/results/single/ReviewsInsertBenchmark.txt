@@ -1,0 +1,54 @@
+insert.review.commit=1, -insert.review.count=982000, -insert.review.measurementBatch=1000, -insert.review.reinitGraph=1
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 982 iterations, single-shot each, 1000 calls per op
+# Timeout: 2 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark.benchmark
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+Iteration   1: <failure>
+
+java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at java.lang.StringCoding.decode(StringCoding.java:215)
+	at java.lang.String.<init>(String.java:463)
+	at java.lang.String.<init>(String.java:515)
+	at org.neo4j.driver.internal.packstream.PackStream$Unpacker.unpackString(PackStream.java:540)
+	at org.neo4j.driver.internal.messaging.PackStreamMessageFormatV1$Reader.unpackNode(PackStreamMessageFormatV1.java:591)
+	at org.neo4j.driver.internal.messaging.PackStreamMessageFormatV1$Reader.unpackValue(PackStreamMessageFormatV1.java:551)
+	at org.neo4j.driver.internal.messaging.PackStreamMessageFormatV1$Reader.unpackRecordMessage(PackStreamMessageFormatV1.java:507)
+	at org.neo4j.driver.internal.messaging.PackStreamMessageFormatV1$Reader.read(PackStreamMessageFormatV1.java:425)
+	at org.neo4j.driver.internal.net.SocketClient.receiveOne(SocketClient.java:191)
+	at org.neo4j.driver.internal.net.SocketConnection.receiveOne(SocketConnection.java:217)
+	at org.neo4j.driver.internal.net.ConcurrencyGuardingConnection.receiveOne(ConcurrencyGuardingConnection.java:165)
+	at org.neo4j.driver.internal.net.pooling.PooledSocketConnection.receiveOne(PooledSocketConnection.java:183)
+	at org.neo4j.driver.internal.InternalStatementResult.receiveOne(InternalStatementResult.java:335)
+	at org.neo4j.driver.internal.InternalStatementResult.tryFetchNext(InternalStatementResult.java:325)
+	at org.neo4j.driver.internal.InternalStatementResult.hasNext(InternalStatementResult.java:193)
+	at java.util.Iterator.forEachRemaining(Iterator.java:115)
+	at java.util.Spliterators$IteratorSpliterator.forEachRemaining(Spliterators.java:1801)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471)
+	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418)
+	at com.steelbridgelabs.oss.neo4j.structure.Neo4JSession.combine(Neo4JSession.java:462)
+	at com.steelbridgelabs.oss.neo4j.structure.Neo4JSession.vertices(Neo4JSession.java:352)
+	at com.steelbridgelabs.oss.neo4j.structure.Neo4JGraph.vertices(Neo4JGraph.java:304)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.map.GraphStep.lambda$new$0(GraphStep.java:66)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.map.GraphStep$$Lambda$58/1951754200.get(Unknown Source)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.map.GraphStep.processNextStart(GraphStep.java:142)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.util.AbstractStep.hasNext(AbstractStep.java:143)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.util.ExpandableStepIterator.next(ExpandableStepIterator.java:50)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.filter.FilterStep.processNextStart(FilterStep.java:37)
+
+
+# Run complete. Total time: 00:00:36

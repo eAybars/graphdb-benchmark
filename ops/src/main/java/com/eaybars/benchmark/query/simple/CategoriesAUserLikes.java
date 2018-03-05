@@ -3,6 +3,7 @@ package com.eaybars.benchmark.query.simple;
 import com.eaybars.benchmark.GraphSupplier;
 import com.eaybars.benchmark.Information;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.openjdk.jmh.annotations.*;
@@ -26,16 +27,20 @@ public class CategoriesAUserLikes {
 
 
     @Benchmark
-    public List<Vertex> query(GraphSupplier graphSupplier) {
+    public List<Vertex> query(GraphSupplier graphSupplier) throws Exception {
         GraphTraversalSource g = graphSupplier.traversalSource();
-        List<Vertex> result = g.V().hasLabel("person")
+
+        List<Vertex> result;
+
+        try (GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("person")
                 .has("reviewerID", id)
                 .out("created")//to review
                 .has("overall", P.gt(3))
                 .out("about")//tp product
                 .out("productCategory")
-                .dedup()
-                .toList();
+                .dedup();) {
+            result = traversal.toList();
+        }
         try {
             Information.BENCHMARK_RESULT.put("CategoriesAUserLikes", result.size());
         } catch (IOException e) {

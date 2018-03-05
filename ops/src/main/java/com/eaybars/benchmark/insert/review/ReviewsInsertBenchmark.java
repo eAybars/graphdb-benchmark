@@ -1,6 +1,7 @@
 package com.eaybars.benchmark.insert.review;
 
 import com.eaybars.benchmark.GraphSupplier;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ReviewsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(GraphSupplier graphSupplier, Reviews is) {
+    public void benchmark(GraphSupplier graphSupplier, Reviews is) throws Exception {
         GraphTraversalSource g = graphSupplier.traversalSource();
         JsonObject object = is.getObject();
 
@@ -28,22 +29,32 @@ public class ReviewsInsertBenchmark {
         review.property("unixReviewTime", object.getJsonNumber("unixReviewTime").longValue());
 
         Vertex user;
-        try {
-            user = g.V().hasLabel("person").has("reviewerID", object.getString("reviewerID")).next();
+        try (GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("person")
+                .has("reviewerID", object.getString("reviewerID"));) {
+            user = traversal.next();
         } catch (NoSuchElementException e) {
-            user = g.addV("person")
-                    .property("reviewerID", object.getString("reviewerID"))
-                    .property("reviewerName", object.getString("reviewerName", "anonymous"))
-                    .next();
+            user = g.getGraph().addVertex("person");
+            user.property("reviewerID", object.getString("reviewerID"));
+            user.property("reviewerName", object.getString("reviewerName", "anonymous"));
+
+//            try (GraphTraversal<Vertex, Vertex> traversal = g.addV("person")
+//                    .property("reviewerID", object.getString("reviewerID"))
+//                    .property("reviewerName", object.getString("reviewerName", "anonymous"));) {
+//                user = traversal.next();
+//            }
         }
 
         Vertex product;
-        try {
-            product = g.V().hasLabel("product").has("productId", object.getString("asin")).next();
+        try (GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("product")
+                .has("productId", object.getString("asin"));) {
+            product = traversal.next();
         } catch (NoSuchElementException e) {
-            product = g.addV("product")
-                    .property("productId", object.getString("asin"))
-                    .next();
+            product = g.getGraph().addVertex("product");
+            product.property("productId", object.getString("asin"));
+//            try (GraphTraversal<Vertex, Vertex> traversal = g.addV("product")
+//                    .property("productId", object.getString("asin"));) {
+//                product = traversal.next();
+//            }
         }
 
 

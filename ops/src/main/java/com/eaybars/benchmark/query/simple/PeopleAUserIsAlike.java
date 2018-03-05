@@ -4,6 +4,7 @@ import com.eaybars.benchmark.GraphSupplier;
 import com.eaybars.benchmark.Information;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -18,6 +19,7 @@ import static com.eaybars.benchmark.Arguments.ARGUMENTS;
 import static org.apache.tinkerpop.gremlin.process.traversal.P.eq;
 import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.out;
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.tree;
 
 /**
  * A simple linear traversal
@@ -31,9 +33,10 @@ public class PeopleAUserIsAlike {
 
 
     @Benchmark
-    public List<Vertex> query(GraphSupplier graphSupplier) {
+    public List<Vertex> query(GraphSupplier graphSupplier) throws Exception {
         GraphTraversalSource g = graphSupplier.traversalSource();
-        List<Vertex> result = g.V().hasLabel("person")
+        List<Vertex> result;
+        try (GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("person")
                 .has("reviewerID", id)
                 .as("user")
                 .out("created")//to review
@@ -43,8 +46,10 @@ public class PeopleAUserIsAlike {
                 .in("created")
                 .where(neq("user"))
                 .dedup()
-                .order().by(out("created").out("about").where(eq("products")).count(), Order.decr)
-                .toList();
+                .order().by(out("created").out("about").where(eq("products")).count(), Order.decr);) {
+
+            result = traversal.toList();
+        }
         try {
             Information.BENCHMARK_RESULT.put("PeopleAUserIsAlike", result.size());
         } catch (IOException e) {

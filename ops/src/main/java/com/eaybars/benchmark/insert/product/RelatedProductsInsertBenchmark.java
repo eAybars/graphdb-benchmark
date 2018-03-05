@@ -2,6 +2,7 @@ package com.eaybars.benchmark.insert.product;
 
 import com.eaybars.benchmark.GraphSupplier;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -18,24 +19,31 @@ import java.util.concurrent.TimeUnit;
 public class RelatedProductsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(Products products, GraphSupplier graphSupplier) {
+    public void benchmark(Products products, GraphSupplier graphSupplier) throws Exception {
         GraphTraversalSource g = graphSupplier.traversalSource();
         JsonObject object = products.getObject();
 
         Vertex product;
-        try {
-            product = g.V().hasLabel("product").has("productId", object.getString("asin")).next();
+        try (GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("product")
+                .has("productId", object.getString("asin"));){
+            product = traversal.next();
         } catch (NoSuchElementException e) {
             product = null;
         }
         if (product != null) {
             if (!products.getAlsoViewed().isEmpty()) {
-                g.V().hasLabel("product").has("productId", P.within(products.getAlsoViewed()))
-                        .addE("also_viewed").from(product).count().next();
+                try (GraphTraversal<Vertex, Long> traversal = g.V().hasLabel("product")
+                        .has("productId", P.within(products.getAlsoViewed()))
+                        .addE("also_viewed").from(product).count();){
+                    traversal.next();
+                }
             }
             if (!products.getBuyAfterViewing().isEmpty()) {
-                g.V().hasLabel("product").has("productId", P.within(products.getBuyAfterViewing()))
-                        .addE("buy_after_viewing").from(product).count().next();
+                try (GraphTraversal<Vertex, Long> traversal = g.V().hasLabel("product")
+                        .has("productId", P.within(products.getBuyAfterViewing()))
+                        .addE("buy_after_viewing").from(product).count();){
+                    traversal.next();
+                }
             }
 
             //include commit time in the measurement

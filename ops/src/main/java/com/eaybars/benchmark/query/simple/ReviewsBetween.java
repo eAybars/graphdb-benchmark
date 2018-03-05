@@ -3,6 +3,7 @@ package com.eaybars.benchmark.query.simple;
 import com.eaybars.benchmark.GraphSupplier;
 import com.eaybars.benchmark.Information;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.openjdk.jmh.annotations.*;
@@ -24,11 +25,14 @@ public class ReviewsBetween {
 
 
     @Benchmark
-    public List<Vertex> query(GraphSupplier graphSupplier) {
+    public List<Vertex> query(GraphSupplier graphSupplier) throws Exception {
         GraphTraversalSource g = graphSupplier.traversalSource();
-        List<Vertex> results = g.V().hasLabel("review")
-                .has("unixReviewTime", P.between(start, end))
-                .toList();
+
+        List<Vertex> results;
+        try (GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("review")
+                .has("unixReviewTime", P.between(start, end));) {
+            results = traversal.toList();
+        }
         try {
             Information.BENCHMARK_RESULT.put("ReviewsBetween", results.size());
         } catch (IOException e) {
