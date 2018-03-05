@@ -51,6 +51,7 @@ public class ReviewsInsertBenchmark {
             productSelectStatement.setString(1, object.getString("asin"));
             if (!productSelectStatement.executeQuery().next()) {
                 productInsertStatement.setString(1, object.getString("asin"));
+                productInsertStatement.executeUpdate();
             }
 
             reviewInsertStatement.setString(1, object.getString("asin"));

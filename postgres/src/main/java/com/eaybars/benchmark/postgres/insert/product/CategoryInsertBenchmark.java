@@ -22,22 +22,34 @@ public class CategoryInsertBenchmark {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = products.getObject();
         String sqlProductSelect = "SELECT product_id FROM product WHERE product_id=?";
+        String sqlCategorySelect = "SELECT category_name FROM category WHERE category_name=?";
         String sqlInsertToCategory = "INSERT INTO category(category_name) VALUES(?)";
         String sqlInsertToProductCategory = "INSERT INTO product_category(product_id, category_name) VALUES(?,?)";
         try (PreparedStatement productSelectStatement = connection.prepareStatement(sqlProductSelect);
-             PreparedStatement preparedStatementCategory = connection.prepareStatement(sqlInsertToCategory);
-             PreparedStatement preparedStatementProductCategory = connection.prepareStatement(sqlInsertToProductCategory);) {
+             PreparedStatement preparedStatementSelectCategory = connection.prepareStatement(sqlCategorySelect);
+             PreparedStatement preparedStatementInsertCategory = connection.prepareStatement(sqlInsertToCategory);
+             PreparedStatement preparedStatementInsertProductCategory = connection.prepareStatement(sqlInsertToProductCategory);) {
+            productSelectStatement.setString(1, object.getString("asin"));
             if (productSelectStatement.executeQuery().next()) {
+                boolean executeCategoryInsert = false;
                 for (String category : products.getCategories()) {
-                    preparedStatementCategory.setString(1, category);
-                    preparedStatementCategory.addBatch();
+                    preparedStatementSelectCategory.setString(1, category);
+                    if (!preparedStatementSelectCategory.executeQuery().next()) {
+                        preparedStatementInsertCategory.setString(1, category);
+                        preparedStatementInsertCategory.addBatch();
+                        executeCategoryInsert = true;
+                    }
 
-                    preparedStatementProductCategory.setString(1, object.getString("asin"));
-                    preparedStatementProductCategory.setString(2, category);
-                    preparedStatementProductCategory.addBatch();
+                    preparedStatementInsertProductCategory.setString(1, object.getString("asin"));
+                    preparedStatementInsertProductCategory.setString(2, category);
+                    preparedStatementInsertProductCategory.addBatch();
                 }
-                preparedStatementCategory.executeBatch();
-                preparedStatementProductCategory.executeBatch();
+
+                if (executeCategoryInsert) {
+                    preparedStatementInsertCategory.executeBatch();
+                }
+
+                preparedStatementInsertProductCategory.executeBatch();
             }
         }
         connectionSupplier.commit();

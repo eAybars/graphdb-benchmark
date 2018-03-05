@@ -9,6 +9,7 @@ case $APP_NAME in
     ;;
     *)
         echo "App not found: $APP_NAME"
+        exit 1
     ;;
 esac
 

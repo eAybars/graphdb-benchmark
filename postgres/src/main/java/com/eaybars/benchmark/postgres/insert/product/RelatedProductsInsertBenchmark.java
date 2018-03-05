@@ -10,6 +10,7 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 import javax.json.JsonObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
@@ -28,24 +29,42 @@ public class RelatedProductsInsertBenchmark {
                 + "VALUES(?,?)";
         String sqlBuyAfterViewing = "INSERT INTO buy_after_viewing(product_id,buy_after_viewing_id) "
                 + "VALUES(?,?)";
+        boolean executeAlsoviewed = false, executeBuyAfter = false;
         try (PreparedStatement productSelectStatement = connection.prepareStatement(sqlProductSelect);
              PreparedStatement alsoViewedStatement = connection.prepareStatement(sqlAlsoViewed);
              PreparedStatement buyAfterViewingStatement = connection.prepareStatement(sqlBuyAfterViewing);) {
             productSelectStatement.setString(1, object.getString("asin"));
-            if (productSelectStatement.executeQuery().next()) {
+            ResultSet mainProduct = productSelectStatement.executeQuery();
+            if (mainProduct.next()) {
+                mainProduct.close();
                 for (String alsoViewed : products.getAlsoViewed()) {
-                    alsoViewedStatement.setString(1, object.getString("asin"));
-                    alsoViewedStatement.setString(2, alsoViewed);
-                    alsoViewedStatement.addBatch();
+                    productSelectStatement.setString(1, alsoViewed);
+                    ResultSet alsoViewedResult = productSelectStatement.executeQuery();
+                    if (alsoViewedResult.next()) {
+                        alsoViewedStatement.setString(1, object.getString("asin"));
+                        alsoViewedStatement.setString(2, alsoViewed);
+                        alsoViewedStatement.addBatch();
+                        executeAlsoviewed = true;
+                    }
+                    alsoViewedResult.close();
                 }
-                alsoViewedStatement.executeBatch();
-                for (String buyAfterViewing : products.getBuyAfterViewing()) {
-                    buyAfterViewingStatement.setString(1, object.getString("asin"));
-                    buyAfterViewingStatement.setString(2, buyAfterViewing);
-                    buyAfterViewingStatement.addBatch();
+                if (executeAlsoviewed) {
+                    alsoViewedStatement.executeBatch();
+                }
 
+                for (String buyAfterViewing : products.getBuyAfterViewing()) {
+                    productSelectStatement.setString(1, buyAfterViewing);
+                    ResultSet buyAfterViewingResult = productSelectStatement.executeQuery();
+                    if (buyAfterViewingResult.next()) {
+                        buyAfterViewingStatement.setString(1, object.getString("asin"));
+                        buyAfterViewingStatement.setString(2, buyAfterViewing);
+                        buyAfterViewingStatement.addBatch();
+                        executeBuyAfter = true;
+                    }
                 }
-                buyAfterViewingStatement.executeBatch();
+                if (executeBuyAfter) {
+                    buyAfterViewingStatement.executeBatch();
+                }
             }
 
         }

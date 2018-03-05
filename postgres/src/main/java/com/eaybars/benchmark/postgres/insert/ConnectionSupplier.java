@@ -22,6 +22,7 @@ public class ConnectionSupplier {
     private void initConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         connection = DriverManager.getConnection("jdbc:postgresql://postgres:5432/testdb", "root", "123456");
+        connection.setAutoCommit(false);
 
         DatabaseMetaData dbm = connection.getMetaData();
         ResultSet table = dbm.getTables(null, null, "product", null);
@@ -119,8 +120,8 @@ public class ConnectionSupplier {
         if (options.getCommitInterval() > 0 && count > 0 && lastCommit < count &&
                 (options.getCommitInterval() == 1 || count % options.getCommitInterval() == 0)) {
             try {
-                lastCommit = count;
                 connection.commit();
+                lastCommit = count;
             } catch (Exception e) {
             }
         }
@@ -131,6 +132,7 @@ public class ConnectionSupplier {
         try {
             if (options.getCommitInterval() > 0 && lastCommit < count) {
                 connection.commit();
+                lastCommit = count;
             }
         } catch (Exception e) {
         } finally {
