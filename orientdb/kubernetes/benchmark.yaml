@@ -39,4 +39,5 @@ spec:
           - "-insert.review.measurementBatch=1000"
           - "-query.rb=5"
           - "-query.caul=5"
+          - "-query.pauia=5"
 

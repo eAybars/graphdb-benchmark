@@ -1,0 +1,54 @@
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 5 iterations, single-shot each
+# Timeout: 4 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.query.simple.ReviewsBetween.query
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Iteration   1: <failure>
+
+java.lang.UnsupportedOperationException: Predicate and(gte(1390521600), lt(1393113600)) not supported!
+	at org.apache.tinkerpop.gremlin.orientdb.OrientGraphQueryBuilder.formatPredicate(OrientGraphQueryBuilder.java:143)
+	at org.apache.tinkerpop.gremlin.orientdb.OrientGraphQueryBuilder.formatCondition(OrientGraphQueryBuilder.java:99)
+	at org.apache.tinkerpop.gremlin.orientdb.OrientGraphQueryBuilder.lambda$fillParameters$3(OrientGraphQueryBuilder.java:61)
+	at java.util.LinkedHashMap$LinkedEntrySet.forEach(LinkedHashMap.java:671)
+	at org.apache.tinkerpop.gremlin.orientdb.OrientGraphQueryBuilder.fillParameters(OrientGraphQueryBuilder.java:60)
+	at org.apache.tinkerpop.gremlin.orientdb.OrientGraphQueryBuilder.build(OrientGraphQueryBuilder.java:47)
+	at org.apache.tinkerpop.gremlin.orientdb.traversal.step.sideEffect.OrientGraphStep.buildQuery(OrientGraphStep.java:128)
+	at org.apache.tinkerpop.gremlin.orientdb.traversal.step.sideEffect.OrientGraphStep.elements(OrientGraphStep.java:77)
+	at org.apache.tinkerpop.gremlin.orientdb.traversal.step.sideEffect.OrientGraphStep.vertices(OrientGraphStep.java:47)
+	at org.apache.tinkerpop.gremlin.orientdb.traversal.step.sideEffect.OrientGraphStep.lambda$new$0(OrientGraphStep.java:39)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.map.GraphStep.processNextStart(GraphStep.java:142)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.util.AbstractStep.next(AbstractStep.java:128)
+	at org.apache.tinkerpop.gremlin.process.traversal.step.util.AbstractStep.next(AbstractStep.java:38)
+	at org.apache.tinkerpop.gremlin.process.traversal.Traversal.fill(Traversal.java:179)
+	at org.apache.tinkerpop.gremlin.process.traversal.Traversal.toList(Traversal.java:117)
+	at com.eaybars.benchmark.query.simple.ReviewsBetween.query(ReviewsBetween.java:31)
+	at com.eaybars.benchmark.query.simple.generated.ReviewsBetween_query_jmhTest.query_ss_jmhStub(ReviewsBetween_query_jmhTest.java:446)
+	at com.eaybars.benchmark.query.simple.generated.ReviewsBetween_query_jmhTest.query_SingleShotTime(ReviewsBetween_query_jmhTest.java:397)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.openjdk.jmh.runner.BenchmarkHandler$BenchmarkTask.call(BenchmarkHandler.java:453)
+	at org.openjdk.jmh.runner.BenchmarkHandler$BenchmarkTask.call(BenchmarkHandler.java:437)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+# Run complete. Total time: 00:00:01
