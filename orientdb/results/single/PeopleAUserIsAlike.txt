@@ -1,0 +1,53 @@
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 5 iterations, single-shot each
+# Timeout: 4 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.query.simple.PeopleAUserIsAlike.query
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+Iteration   1: 5.555 s/op
+Iteration   2: 2.542 s/op
+Iteration   3: 2.553 s/op
+Iteration   4: 1.382 s/op
+Iteration   5: 2.979 s/op
+
+Result "com.eaybars.benchmark.query.simple.PeopleAUserIsAlike.query":
+  N = 5
+  mean =      3.002 ?(99.9%) 5.952 s/op
+
+  Histogram, s/op:
+    [1.000, 1.500) = 1
+    [1.500, 2.000) = 0
+    [2.000, 2.500) = 0
+    [2.500, 3.000) = 3
+    [3.000, 3.500) = 0
+    [3.500, 4.000) = 0
+    [4.000, 4.500) = 0
+    [4.500, 5.000) = 0
+    [5.000, 5.500) = 0
+
+  Percentiles, s/op:
+      p(0.0000) =      1.382 s/op
+     p(50.0000) =      2.553 s/op
+     p(90.0000) =      5.555 s/op
+     p(95.0000) =      5.555 s/op
+     p(99.0000) =      5.555 s/op
+     p(99.9000) =      5.555 s/op
+     p(99.9900) =      5.555 s/op
+     p(99.9990) =      5.555 s/op
+     p(99.9999) =      5.555 s/op
+    p(100.0000) =      5.555 s/op
+
+
+# Run complete. Total time: 00:00:15
+
+Benchmark                 Mode  Cnt  Score   Error  Units
+PeopleAUserIsAlike.query    ss    5  3.002 ? 5.952   s/op

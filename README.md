@@ -1,4 +1,4 @@
-# Graph DB Benchmark
+# Apache TP3 Compatible Graph DB Benchmark
 This is a study of performance comparison for various graph databases.
 
 ## Tested databases:
