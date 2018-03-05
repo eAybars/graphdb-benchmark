@@ -18,33 +18,37 @@ import java.util.concurrent.TimeUnit;
 public class RelatedProductsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(Products products, ConnectionSupplier connectionSupplier) {
+    public void benchmark(Products products, ConnectionSupplier connectionSupplier) throws SQLException {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = products.getObject();
+
+        String sqlProductSelect = "SELECT product_id FROM product WHERE product_id=?";
+
         String sqlAlsoViewed = "INSERT INTO also_viewed(product_id,also_viewed_id) "
                 + "VALUES(?,?)";
         String sqlBuyAfterViewing = "INSERT INTO buy_after_viewing(product_id,buy_after_viewing_id) "
                 + "VALUES(?,?)";
-        try (PreparedStatement alsoViewedStatement = connection.prepareStatement(sqlAlsoViewed);
+        try (PreparedStatement productSelectStatement = connection.prepareStatement(sqlProductSelect);
+             PreparedStatement alsoViewedStatement = connection.prepareStatement(sqlAlsoViewed);
              PreparedStatement buyAfterViewingStatement = connection.prepareStatement(sqlBuyAfterViewing);) {
-            for (String alsoViewed : products.getAlsoViewed()) {
-                alsoViewedStatement.setString(1, object.getString("asin"));
-                alsoViewedStatement.setString(2, alsoViewed);
-                alsoViewedStatement.addBatch();
-            }
-            alsoViewedStatement.executeBatch();
-            for (String buyAfterViewing : products.getBuyAfterViewing()) {
-                buyAfterViewingStatement.setString(1, object.getString("asin"));
-                buyAfterViewingStatement.setString(2, buyAfterViewing);
-                buyAfterViewingStatement.addBatch();
+            productSelectStatement.setString(1, object.getString("asin"));
+            if (productSelectStatement.executeQuery().next()) {
+                for (String alsoViewed : products.getAlsoViewed()) {
+                    alsoViewedStatement.setString(1, object.getString("asin"));
+                    alsoViewedStatement.setString(2, alsoViewed);
+                    alsoViewedStatement.addBatch();
+                }
+                alsoViewedStatement.executeBatch();
+                for (String buyAfterViewing : products.getBuyAfterViewing()) {
+                    buyAfterViewingStatement.setString(1, object.getString("asin"));
+                    buyAfterViewingStatement.setString(2, buyAfterViewing);
+                    buyAfterViewingStatement.addBatch();
 
+                }
+                buyAfterViewingStatement.executeBatch();
             }
-            buyAfterViewingStatement.executeBatch();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
 
         connectionSupplier.commit();
     }

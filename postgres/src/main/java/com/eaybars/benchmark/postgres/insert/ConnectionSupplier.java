@@ -32,46 +32,46 @@ public class ConnectionSupplier {
                     "description text, " +
                     "price NUMERIC, " +
                     "img_url text )";
-            prepareStatement(sqlCreateProductStatement);
-            prepareStatement("CREATE INDEX price_field_index ON product (price)");
+            executeStatement(sqlCreateProductStatement);
+            executeStatement("CREATE INDEX price_field_index ON product (price)");
 
             // creates also_viewed table and indexes
             String sqlCreateAlsoViewedStatement = "CREATE TABLE also_viewed(" +
                     "product_id REFERENCES product(product_id) ON DELETE CASCADE, " +
                     "also_viewed_id REFERENCES product(product_id) ON DELETE CASCADE, " +
                     "PRIMARY KEY (product_id, also_viewed_id))";
-            prepareStatement(sqlCreateAlsoViewedStatement);
-            prepareStatement("CREATE INDEX product_id_index ON also_viewed (product_id)");
-            prepareStatement("CREATE INDEX also_viewed_id_index ON also_viewed (also_viewed_id)");
+            executeStatement(sqlCreateAlsoViewedStatement);
+            executeStatement("CREATE INDEX product_id_index ON also_viewed (product_id)");
+            executeStatement("CREATE INDEX also_viewed_id_index ON also_viewed (also_viewed_id)");
 
             // creates buy_after_viewing table and indexes
             String sqlCreateBuyAfterViewingStatement = "CREATE TABLE buy_after_viewing(" +
                     "product_id REFERENCES product(product_id) ON DELETE CASCADE, " +
                     "buy_after_viewing_id REFERENCES product(product_id) ON DELETE CASCADE, " +
                     "PRIMARY KEY (product_id, buy_after_viewing_id))";
-            prepareStatement(sqlCreateBuyAfterViewingStatement);
-            prepareStatement("CREATE INDEX product_id_index ON buy_after_viewing (product_id)");
-            prepareStatement("CREATE INDEX buy_after_viewing_id_index ON buy_after_viewing (buy_after_viewing_id)");
+            executeStatement(sqlCreateBuyAfterViewingStatement);
+            executeStatement("CREATE INDEX product_id_index ON buy_after_viewing (product_id)");
+            executeStatement("CREATE INDEX buy_after_viewing_id_index ON buy_after_viewing (buy_after_viewing_id)");
 
             // creates category table and indexes
             String sqlCreateCategory = "CREATE TABLE category(" +
                     "category_name VARCHAR(100) PRIMARY KEY)";
-            prepareStatement(sqlCreateCategory);
+            executeStatement(sqlCreateCategory);
 
             // creates product_category table and indexes
             String sqlCreateProductCategoryStatement = "CREATE TABLE product_category(" +
                     "product_id REFERENCES product(product_id) ON DELETE CASCADE , " +
                     "category_name REFERENCES category(category_name) ON DELETE CASCADE , " +
                     "PRIMARY KEY (product_id, category_name))";
-            prepareStatement(sqlCreateProductCategoryStatement);
-            prepareStatement("CREATE INDEX product_id_index ON product_category (product_id)");
-            prepareStatement("CREATE INDEX category_name_index ON product_category (category_name)");
+            executeStatement(sqlCreateProductCategoryStatement);
+            executeStatement("CREATE INDEX product_id_index ON product_category (product_id)");
+            executeStatement("CREATE INDEX category_name_index ON product_category (category_name)");
 
             // create person table and indexes
             String sqlCreatePersonStatement = "CREATE TABLE person(" +
                     "reviewer_id VARCHAR(100) PRIMARY KEY, " +
                     "reviewer_name VARCHAR(100))";
-            prepareStatement(sqlCreatePersonStatement);
+            executeStatement(sqlCreatePersonStatement);
 
             // creates review table and indexes
             String sqlReviewStatement = "CREATE TABLE review(" +
@@ -82,16 +82,17 @@ public class ConnectionSupplier {
                     "review_text TEXT, " +
                     "overall NUMERIC, " +
                     "unixReviewTime BIGINT)";
-            prepareStatement(sqlReviewStatement);
-            prepareStatement("CREATE INDEX reviewer_id_index ON review (reviewer_id)");
-            prepareStatement("CREATE INDEX product_id_index ON review (product_id)");
-            prepareStatement("CREATE INDEX overall_field_index ON review (overall)");
-            prepareStatement("CREATE INDEX unix_review_time_index ON review (unixReviewTime)");
+            executeStatement(sqlReviewStatement);
+            executeStatement("CREATE INDEX reviewer_id_index ON review (reviewer_id)");
+            executeStatement("CREATE INDEX product_id_index ON review (product_id)");
+            executeStatement("CREATE INDEX overall_field_index ON review (overall)");
+            executeStatement("CREATE INDEX unix_review_time_index ON review (unixReviewTime)");
 
         }
+        table.close();
     }
 
-    private void prepareStatement(String sql) throws SQLException {
+    private void executeStatement(String sql) throws SQLException {
         PreparedStatement createProductStatement = connection.prepareStatement(sql);
         createProductStatement.executeUpdate();
         createProductStatement.close();

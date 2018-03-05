@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class ProductsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(Products products, ConnectionSupplier connectionSupplier) {
+    public void benchmark(Products products, ConnectionSupplier connectionSupplier) throws SQLException {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = products.getObject();
 
@@ -36,8 +36,7 @@ public class ProductsInsertBenchmark {
                     .map(JsonNumber::doubleValue)
                     .orElse(0.0));
             preparedStatement.setString(4, object.getString("imUrl", ""));
-        } catch (SQLException e) {
-            e.printStackTrace();
+            preparedStatement.executeUpdate();
         }
         connectionSupplier.commit();
     }

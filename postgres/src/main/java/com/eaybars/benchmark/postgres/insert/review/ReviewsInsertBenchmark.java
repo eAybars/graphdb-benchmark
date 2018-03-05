@@ -18,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 public class ReviewsInsertBenchmark {
 
     @Benchmark
-    public void benchmark(Reviews reviews, ConnectionSupplier connectionSupplier) {
+    public void benchmark(Reviews reviews, ConnectionSupplier connectionSupplier) throws SQLException {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = reviews.getObject();
 
-        String sqlProductSelect = "select exists(select 1 from product where product_id=?)";
-        String sqlPersonSelect = "select exists(select 1 from person where reviewer_id=?)";
+        String sqlProductSelect = "select product_id from product where product_id=?)";
+        String sqlPersonSelect = "select reviewer_id from person where reviewer_id=?)";
 
         String sqlPersonInsert = "INSERT INTO person(reviewer_id,reviewer_name) "
                 + "VALUES(?,?)";
@@ -42,14 +42,14 @@ public class ReviewsInsertBenchmark {
 
             personSelectStatement.setString(1, object.getString("reviewerID"));
 
-            if (personSelectStatement.executeUpdate() == 0) {
+            if (!personSelectStatement.executeQuery().next()) {
                 personInsertStatement.setString(1, object.getString("reviewerID"));
                 personInsertStatement.setString(2, object.getString("reviewerName", "anonymous"));
                 personInsertStatement.executeUpdate();
             }
 
             productSelectStatement.setString(1, object.getString("asin"));
-            if (productSelectStatement.executeUpdate() == 0) {
+            if (!productSelectStatement.executeQuery().next()) {
                 productInsertStatement.setString(1, object.getString("asin"));
             }
 
@@ -61,8 +61,6 @@ public class ReviewsInsertBenchmark {
             reviewInsertStatement.setLong(6, object.getJsonNumber("unixReviewTime").longValue());
             reviewInsertStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         connectionSupplier.commit();

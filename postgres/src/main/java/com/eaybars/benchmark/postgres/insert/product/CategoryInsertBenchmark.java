@@ -18,25 +18,27 @@ import java.util.concurrent.TimeUnit;
 public class CategoryInsertBenchmark {
 
     @Benchmark
-    public void benchmark(Products products, ConnectionSupplier connectionSupplier) {
+    public void benchmark(Products products, ConnectionSupplier connectionSupplier) throws SQLException {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = products.getObject();
+        String sqlProductSelect = "SELECT product_id FROM product WHERE product_id=?";
         String sqlInsertToCategory = "INSERT INTO category(category_name) VALUES(?)";
         String sqlInsertToProductCategory = "INSERT INTO product_category(product_id, category_name) VALUES(?,?)";
-        try (PreparedStatement preparedStatementCategory = connection.prepareStatement(sqlInsertToCategory);
+        try (PreparedStatement productSelectStatement = connection.prepareStatement(sqlProductSelect);
+             PreparedStatement preparedStatementCategory = connection.prepareStatement(sqlInsertToCategory);
              PreparedStatement preparedStatementProductCategory = connection.prepareStatement(sqlInsertToProductCategory);) {
-            for (String category : products.getCategories()) {
-                preparedStatementCategory.setString(1, category);
-                preparedStatementCategory.addBatch();
+            if (productSelectStatement.executeQuery().next()) {
+                for (String category : products.getCategories()) {
+                    preparedStatementCategory.setString(1, category);
+                    preparedStatementCategory.addBatch();
 
-                preparedStatementProductCategory.setString(1, object.getString("asin"));
-                preparedStatementProductCategory.setString(2, category);
-                preparedStatementProductCategory.addBatch();
+                    preparedStatementProductCategory.setString(1, object.getString("asin"));
+                    preparedStatementProductCategory.setString(2, category);
+                    preparedStatementProductCategory.addBatch();
+                }
+                preparedStatementCategory.executeBatch();
+                preparedStatementProductCategory.executeBatch();
             }
-            preparedStatementCategory.executeBatch();
-            preparedStatementProductCategory.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         connectionSupplier.commit();
 
