@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-benchmark
+  labels:
+    app: postgres-benchmark
+spec:
+  template:
+    metadata:
+      labels:
+        app: postgres-benchmark
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: postgres-benchmark
+        image: eaybars/postgres-benchmark
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: JMH_FORK
+            value: "0"
+          - name: JAVA_OPTIONS
+            value: "-Xms512m -Xmx512m"
+        args:
+          - "-insert.product.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.product.commit=1"
+          - "-insert.product.count=433000"
+          - "-insert.product.measurementBatch=1000"
+          - "-insert.relatedProduct.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.relatedProduct.commit=1"
+          - "-insert.relatedProduct.count=433000"
+          - "-insert.relatedProduct.measurementBatch=1000"
+          - "-insert.productCategory.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.productCategory.commit=10"
+          - "-insert.productCategory.count=433000"
+          - "-insert.productCategory.measurementBatch=1000"
+          - "-insert.review.file=/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"
+          - "-insert.review.commit=20"
+          - "-insert.review.count=982000"
+          - "-insert.review.measurementBatch=1000"
+          - "-query.mrrtbl=5"
+          - "-query.rpp=5"
+          - "-query.mpc=5"

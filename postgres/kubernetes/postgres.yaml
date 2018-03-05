@@ -1,0 +1,34 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:10.2
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "123456"
+        - name: POSTGRES_USER
+          value: root
+        - name: POSTGRES_DB
+          value: testdb
+        ports:
+        - name: postgresql
+          containerPort: 5432
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /data
+      volumes:
+          - hostPath:
+              path: "/tmp/postgresdata"
+              type: DirectoryOrCreate
+            name: postgres-storage

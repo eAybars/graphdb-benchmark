@@ -9,6 +9,8 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 
 import javax.json.JsonObject;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
@@ -19,7 +21,24 @@ public class CategoryInsertBenchmark {
     public void benchmark(Products products, ConnectionSupplier connectionSupplier) {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = products.getObject();
-        //TODO add insert code
+        String sqlInsertToCategory = "INSERT INTO category(category_name) VALUES(?)";
+        String sqlInsertToProductCategory = "INSERT INTO product_category(product_id, category_name) VALUES(?,?)";
+        try (PreparedStatement preparedStatementCategory = connection.prepareStatement(sqlInsertToCategory);
+             PreparedStatement preparedStatementProductCategory = connection.prepareStatement(sqlInsertToProductCategory);) {
+            for (String category : products.getCategories()) {
+                preparedStatementCategory.setString(1, category);
+                preparedStatementCategory.addBatch();
+
+                preparedStatementProductCategory.setString(1, object.getString("asin"));
+                preparedStatementProductCategory.setString(2, category);
+                preparedStatementProductCategory.addBatch();
+            }
+            preparedStatementCategory.executeBatch();
+            preparedStatementProductCategory.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        connectionSupplier.commit();
 
     }
 }
