@@ -51,7 +51,7 @@ public class ConnectionSupplier {
                     "buy_after_viewing_id  VARCHAR(100) REFERENCES product(product_id), " +
                     "PRIMARY KEY (product_id, buy_after_viewing_id))";
             executeStatement(sqlCreateBuyAfterViewingStatement);
-            executeStatement("CREATE INDEX product_id_index ON buy_after_viewing (product_id)");
+            executeStatement("CREATE INDEX product_id_index2 ON buy_after_viewing (product_id)");
             executeStatement("CREATE INDEX buy_after_viewing_id_index ON buy_after_viewing (buy_after_viewing_id)");
 
             // creates category table and indexes
@@ -65,7 +65,7 @@ public class ConnectionSupplier {
                     "category_name  VARCHAR(100) REFERENCES category(category_name) , " +
                     "PRIMARY KEY (product_id, category_name))";
             executeStatement(sqlCreateProductCategoryStatement);
-            executeStatement("CREATE INDEX product_id_index ON product_category (product_id)");
+            executeStatement("CREATE INDEX product_id_index3 ON product_category (product_id)");
             executeStatement("CREATE INDEX category_name_index ON product_category (category_name)");
 
             // create person table and indexes
@@ -85,7 +85,7 @@ public class ConnectionSupplier {
                     "unixReviewTime BIGINT)";
             executeStatement(sqlReviewStatement);
             executeStatement("CREATE INDEX reviewer_id_index ON review (reviewer_id)");
-            executeStatement("CREATE INDEX product_id_index ON review (product_id)");
+            executeStatement("CREATE INDEX product_id_index4 ON review (product_id)");
             executeStatement("CREATE INDEX overall_field_index ON review (overall)");
             executeStatement("CREATE INDEX unix_review_time_index ON review (unixReviewTime)");
 
