@@ -29,7 +29,7 @@ public class QueryBenchmarkBuilder implements BenchmarkRunner {
     public void run(Class<?> benchmarkClass) throws Exception {
         transaction.done(benchmarkClass);
         Options build = new OptionsBuilder()
-                .include(benchmarkClass.getName())
+                .include(benchmarkClass.getSimpleName())
                 .warmupIterations(0)
                 .measurementIterations(times)
                 .timeout(TimeValue.hours(4))

@@ -86,7 +86,7 @@ public class Insert implements BenchmarkRunner {
         int iterationCount = (int) Math.floor((clone.insertCount - excess) * 1.0 / clone.measurementBatchSize);
 
         org.openjdk.jmh.runner.options.Options build = new OptionsBuilder()
-                .include(benchmarkClass.getName())
+                .include(benchmarkClass.getSimpleName())
                 .warmupIterations(0)
                 .timeout(TimeValue.hours(2))
                 .measurementIterations(iterationCount)

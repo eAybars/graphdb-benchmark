@@ -50,6 +50,8 @@ spec:
           value: "true"
         - name: ES_JAVA_OPTS
           value: -Xms512m -Xmx512m
+        - name: PROCESSORS
+          value: 4
         ports:
         - containerPort: 9300
           name: transport
