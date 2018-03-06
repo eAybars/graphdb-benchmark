@@ -1,4 +1,4 @@
-package com.eaybars.benchmark.postgres.insert;
+package com.eaybars.benchmark.insert;
 
 import com.eaybars.benchmark.Transaction;
 import org.openjdk.jmh.annotations.*;

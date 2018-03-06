@@ -1,7 +1,6 @@
-package com.eaybars.benchmark.postgres.insert.review;
+package com.eaybars.benchmark.insert.review;
 
-import com.eaybars.benchmark.insert.review.Reviews;
-import com.eaybars.benchmark.postgres.insert.ConnectionSupplier;
+import com.eaybars.benchmark.insert.ConnectionSupplier;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
