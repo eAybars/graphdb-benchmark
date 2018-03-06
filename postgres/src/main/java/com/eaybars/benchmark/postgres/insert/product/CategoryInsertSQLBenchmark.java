@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class CategoryInsertBenchmark {
+public class CategoryInsertSQLBenchmark {
 
     @Benchmark
     public void benchmark(Products products, ConnectionSupplier connectionSupplier) throws SQLException {

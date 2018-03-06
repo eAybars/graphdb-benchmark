@@ -9,17 +9,15 @@ import org.openjdk.jmh.annotations.OutputTimeUnit;
 
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
-import javax.json.JsonValue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class ProductsInsertBenchmark {
+public class ProductsInsertSQLBenchmark {
 
     @Benchmark
     public void benchmark(Products products, ConnectionSupplier connectionSupplier) throws SQLException {
