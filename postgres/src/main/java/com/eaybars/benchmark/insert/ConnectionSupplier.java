@@ -38,8 +38,8 @@ public class ConnectionSupplier {
 
             // creates also_viewed table and indexes
             String sqlCreateAlsoViewedStatement = "CREATE TABLE also_viewed(" +
-                    "product_id REFERENCES product(product_id) ON DELETE CASCADE, " +
-                    "also_viewed_id REFERENCES product(product_id) ON DELETE CASCADE, " +
+                    "product_id  VARCHAR(100) REFERENCES product(product_id), " +
+                    "also_viewed_id  VARCHAR(100) REFERENCES product(product_id), " +
                     "PRIMARY KEY (product_id, also_viewed_id))";
             executeStatement(sqlCreateAlsoViewedStatement);
             executeStatement("CREATE INDEX product_id_index ON also_viewed (product_id)");
@@ -47,8 +47,8 @@ public class ConnectionSupplier {
 
             // creates buy_after_viewing table and indexes
             String sqlCreateBuyAfterViewingStatement = "CREATE TABLE buy_after_viewing(" +
-                    "product_id REFERENCES product(product_id) ON DELETE CASCADE, " +
-                    "buy_after_viewing_id REFERENCES product(product_id) ON DELETE CASCADE, " +
+                    "product_id  VARCHAR(100) REFERENCES product(product_id), " +
+                    "buy_after_viewing_id  VARCHAR(100) REFERENCES product(product_id), " +
                     "PRIMARY KEY (product_id, buy_after_viewing_id))";
             executeStatement(sqlCreateBuyAfterViewingStatement);
             executeStatement("CREATE INDEX product_id_index ON buy_after_viewing (product_id)");
@@ -61,8 +61,8 @@ public class ConnectionSupplier {
 
             // creates product_category table and indexes
             String sqlCreateProductCategoryStatement = "CREATE TABLE product_category(" +
-                    "product_id REFERENCES product(product_id) ON DELETE CASCADE , " +
-                    "category_name REFERENCES category(category_name) ON DELETE CASCADE , " +
+                    "product_id  VARCHAR(100) REFERENCES product(product_id) , " +
+                    "category_name  VARCHAR(100) REFERENCES category(category_name) , " +
                     "PRIMARY KEY (product_id, category_name))";
             executeStatement(sqlCreateProductCategoryStatement);
             executeStatement("CREATE INDEX product_id_index ON product_category (product_id)");
@@ -77,8 +77,8 @@ public class ConnectionSupplier {
             // creates review table and indexes
             String sqlReviewStatement = "CREATE TABLE review(" +
                     "review_id  SERIAL PRIMARY KEY, " +
-                    "product_id REFERENCES product(product_id) ON DELETE CASCADE, " +
-                    "reviewer_id REFERENCES person(reviewer_id) ON DELETE CASCADE, " +
+                    "product_id  VARCHAR(100) REFERENCES product(product_id), " +
+                    "reviewer_id  VARCHAR(100) REFERENCES person(reviewer_id), " +
                     "summary TEXT, " +
                     "review_text TEXT, " +
                     "overall NUMERIC, " +
