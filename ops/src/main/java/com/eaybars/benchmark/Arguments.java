@@ -3,6 +3,7 @@ package com.eaybars.benchmark;
 import com.eaybars.benchmark.insert.Insert;
 import com.eaybars.benchmark.query.QueryBenchmarkBuilder;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -14,6 +15,7 @@ public class Arguments {
 
     void apply(String[] args) {
         this.args = args;
+        System.out.println("Running benchmarks with the following arguments: "+ Arrays.toString(args));
     }
 
     public <T> T extract(String param, Function<String, T> mapper, T defaultValue) {

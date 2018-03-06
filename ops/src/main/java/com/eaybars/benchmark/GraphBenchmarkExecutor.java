@@ -50,7 +50,6 @@ public class GraphBenchmarkExecutor {
             System.exit(0);
         }
         System.setProperty(GraphSupplier.GRAPH_SUPPLIER_CLASS_PROPERTY, GRAPH_SUPPLIER_CLASS.getName());
-        System.out.println("Running benchmarks with the following arguments: "+ Arrays.toString(args));
         ARGUMENTS.apply(args);
         new GraphBenchmarkExecutor().run();
     }
