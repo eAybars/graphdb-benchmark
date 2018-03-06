@@ -21,8 +21,8 @@ public class ReviewsInsertSQLBenchmark {
         Connection connection = connectionSupplier.getConnection();
         JsonObject object = reviews.getObject();
 
-        String sqlProductSelect = "select product_id from product where product_id=?)";
-        String sqlPersonSelect = "select reviewer_id from person where reviewer_id=?)";
+        String sqlProductSelect = "select product_id from product where product_id=?";
+        String sqlPersonSelect = "select reviewer_id from person where reviewer_id=?";
 
         String sqlPersonInsert = "INSERT INTO person(reviewer_id,reviewer_name) "
                 + "VALUES(?,?)";
