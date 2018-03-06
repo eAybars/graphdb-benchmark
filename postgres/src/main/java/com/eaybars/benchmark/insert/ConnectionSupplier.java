@@ -89,6 +89,7 @@ public class ConnectionSupplier {
             executeStatement("CREATE INDEX overall_field_index ON review (overall)");
             executeStatement("CREATE INDEX unix_review_time_index ON review (unixReviewTime)");
 
+            connection.commit();
         }
         table.close();
     }
