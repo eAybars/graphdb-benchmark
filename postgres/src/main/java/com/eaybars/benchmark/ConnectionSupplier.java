@@ -1,4 +1,4 @@
-package com.eaybars.benchmark.insert;
+package com.eaybars.benchmark;
 
 import com.eaybars.benchmark.Transaction;
 import org.openjdk.jmh.annotations.*;

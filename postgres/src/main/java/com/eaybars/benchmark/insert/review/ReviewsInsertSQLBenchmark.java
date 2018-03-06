@@ -1,6 +1,6 @@
 package com.eaybars.benchmark.insert.review;
 
-import com.eaybars.benchmark.insert.ConnectionSupplier;
+import com.eaybars.benchmark.ConnectionSupplier;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
