@@ -21,9 +21,9 @@ public class Insert implements BenchmarkRunner {
         try {
             insert.options.source = InsertSource.from(file);
             if (!insert.options.source.exists()) {
-                throw new IllegalArgumentException("Review file not found: " + file);
+                throw new IllegalArgumentException("Source file not found: " + file);
             } else if (insert.options.source.getNumberOfLines() == 0) {
-                throw new IllegalArgumentException("Review file is empty: " + file);
+                throw new IllegalArgumentException("Source file is empty: " + file);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

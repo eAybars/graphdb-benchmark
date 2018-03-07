@@ -2,9 +2,9 @@ package com.eaybars.benchmark;
 
 
 import com.eaybars.benchmark.insert.product.CategoryInsertSQLBenchmark;
-import com.eaybars.benchmark.insert.product.ProductsInsertSQLBenchmark;
+import com.eaybars.benchmark.insert.product.ProductInsertSQLBenchmark;
 import com.eaybars.benchmark.insert.product.RelatedProductsInsertSQLBenchmark;
-import com.eaybars.benchmark.insert.review.ReviewsInsertSQLBenchmark;
+import com.eaybars.benchmark.insert.review.ReviewInsertSQLBenchmark;
 import com.eaybars.benchmark.query.CategoriesAUserLikesSQL;
 import com.eaybars.benchmark.query.ReviewsBetweenSQL;
 
@@ -14,9 +14,9 @@ public class Executor {
 
     private void run() throws Exception {
         ARGUMENTS.insertFromArguments("product", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz")
-                .ifPresent(BenchmarkRunnerConsumer.forBenchmark(ProductsInsertSQLBenchmark.class));
+                .ifPresent(BenchmarkRunnerConsumer.forBenchmark(ProductInsertSQLBenchmark.class));
         ARGUMENTS.insertFromArguments("review", "/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz")
-                .ifPresent(BenchmarkRunnerConsumer.forBenchmark(ReviewsInsertSQLBenchmark.class));
+                .ifPresent(BenchmarkRunnerConsumer.forBenchmark(ReviewInsertSQLBenchmark.class));
         ARGUMENTS.insertFromArguments("productCategory", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz")
                 .ifPresent(BenchmarkRunnerConsumer.forBenchmark(CategoryInsertSQLBenchmark.class));
         ARGUMENTS.insertFromArguments("relatedProduct", "/opt/graphdb-benchmark/meta_Kindle_Store.json.gz")

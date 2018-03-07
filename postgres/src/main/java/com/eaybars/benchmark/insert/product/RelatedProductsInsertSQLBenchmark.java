@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
@@ -28,7 +29,6 @@ public class RelatedProductsInsertSQLBenchmark {
                 + "VALUES(?,?)";
         String sqlBuyAfterViewing = "INSERT INTO buy_after_viewing(product_id,buy_after_viewing_id) "
                 + "VALUES(?,?)";
-        boolean executeAlsoviewed = false, executeBuyAfter = false;
         try (PreparedStatement productSelectStatement = connection.prepareStatement(sqlProductSelect);
              PreparedStatement alsoViewedStatement = connection.prepareStatement(sqlAlsoViewed);
              PreparedStatement buyAfterViewingStatement = connection.prepareStatement(sqlBuyAfterViewing);) {
@@ -36,39 +36,33 @@ public class RelatedProductsInsertSQLBenchmark {
             ResultSet mainProduct = productSelectStatement.executeQuery();
             if (mainProduct.next()) {
                 mainProduct.close();
-                for (String alsoViewed : products.getAlsoViewed()) {
-                    productSelectStatement.setString(1, alsoViewed);
-                    ResultSet alsoViewedResult = productSelectStatement.executeQuery();
-                    if (alsoViewedResult.next()) {
-                        alsoViewedStatement.setString(1, object.getString("asin"));
-                        alsoViewedStatement.setString(2, alsoViewed);
-                        alsoViewedStatement.addBatch();
-                        executeAlsoviewed = true;
-                    }
-                    alsoViewedResult.close();
-                }
-                if (executeAlsoviewed) {
-                    alsoViewedStatement.executeBatch();
-                }
-
-                for (String buyAfterViewing : products.getBuyAfterViewing()) {
-                    productSelectStatement.setString(1, buyAfterViewing);
-                    ResultSet buyAfterViewingResult = productSelectStatement.executeQuery();
-                    if (buyAfterViewingResult.next()) {
-                        buyAfterViewingStatement.setString(1, object.getString("asin"));
-                        buyAfterViewingStatement.setString(2, buyAfterViewing);
-                        buyAfterViewingStatement.addBatch();
-                        executeBuyAfter = true;
-                    }
-                    buyAfterViewingResult.close();
-                }
-                if (executeBuyAfter) {
-                    buyAfterViewingStatement.executeBatch();
-                }
+                insertRelatedProducts(productSelectStatement, alsoViewedStatement, object.getString("asin"), products.getAlsoViewed());
+                insertRelatedProducts(productSelectStatement, buyAfterViewingStatement, object.getString("asin"), products.getBuyAfterViewing());
             }
-
         }
 
         connectionSupplier.commit();
+    }
+
+    private void insertRelatedProducts(PreparedStatement select,
+                                       PreparedStatement insert,
+                                       String product,
+                                       Set<String> relatedProducts) throws SQLException {
+        boolean executeBatch = false;
+        for (String relatedProduct : relatedProducts) {
+            select.setString(1, relatedProduct);
+            ResultSet selectResult = select.executeQuery();
+
+            if (selectResult.next()) {
+                insert.setString(1, product);
+                insert.setString(2, relatedProduct);
+                insert.addBatch();
+                executeBatch = true;
+            }
+            selectResult.close();
+        }
+        if (executeBatch) {
+            insert.executeBatch();
+        }
     }
 }

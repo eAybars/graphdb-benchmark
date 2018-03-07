@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
-public class ProductsInsertBenchmark {
+public class ProductInsertBenchmark {
 
     @Benchmark
     public void benchmark(Products products, GraphSupplier graphSupplier) throws Exception {

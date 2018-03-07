@@ -8,7 +8,7 @@ insert.review.commit=1, -insert.review.count=982000, -insert.review.measurementB
 # Timeout: 2 hr per iteration
 # Threads: 1 thread
 # Benchmark mode: Single shot invocation time
-# Benchmark: com.eaybars.benchmark.insert.review.ReviewsInsertBenchmark.benchmark
+# Benchmark: com.eaybars.benchmark.insert.review.ReviewInsertBenchmark.benchmark
 
 # Run progress: 0.00% complete, ETA 00:00:00
 # Fork: N/A, test runs in the host VM

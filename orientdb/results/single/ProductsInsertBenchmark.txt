@@ -8,7 +8,7 @@
 # Timeout: 2 hr per iteration
 # Threads: 1 thread
 # Benchmark mode: Single shot invocation time
-# Benchmark: com.eaybars.benchmark.insert.product.ProductsInsertBenchmark.benchmark
+# Benchmark: com.eaybars.benchmark.insert.product.ProductInsertBenchmark.benchmark
 
 # Run progress: 0.00% complete, ETA 00:00:00
 # Fork: N/A, test runs in the host VM
@@ -451,7 +451,7 @@ Iteration 431: 0.450 s/op
 Iteration 432: 0.419 s/op
 Iteration 433: 0.421 s/op
 
-Result "com.eaybars.benchmark.insert.product.ProductsInsertBenchmark.benchmark":
+Result "com.eaybars.benchmark.insert.product.ProductInsertBenchmark.benchmark":
   N = 433
   mean =      0.420 ?(99.9%) 0.019 s/op
 
