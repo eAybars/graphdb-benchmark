@@ -60,6 +60,7 @@ public class RelatedProductsInsertSQLBenchmark {
                         buyAfterViewingStatement.addBatch();
                         executeBuyAfter = true;
                     }
+                    buyAfterViewingResult.close();
                 }
                 if (executeBuyAfter) {
                     buyAfterViewingStatement.executeBatch();
