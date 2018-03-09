@@ -55,8 +55,8 @@ public class ReviewInsertSQLBenchmark {
 
             reviewInsertStatement.setString(1, object.getString("asin"));
             reviewInsertStatement.setString(2, object.getString("reviewerID"));
-            reviewInsertStatement.setString(3, object.getString("summary"));
-            reviewInsertStatement.setString(4, object.getString("reviewText"));
+            reviewInsertStatement.setString(3, object.getString("summary").replace('\0',' '));
+            reviewInsertStatement.setString(4, object.getString("reviewText").replace('\0',' '));
             reviewInsertStatement.setDouble(5, object.getJsonNumber("overall").doubleValue());
             reviewInsertStatement.setLong(6, object.getJsonNumber("unixReviewTime").longValue());
             reviewInsertStatement.executeUpdate();
