@@ -1,0 +1,56 @@
+# JMH version: 1.20
+# VM version: JDK 1.8.0_111, VM 25.111-b15
+# VM invoker: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.111-2.b15.el7_3.x86_64/jre/bin/java
+# VM options: -Xms512m -Xmx512m
+# Warmup: <none>
+# Measurement: 5 iterations, single-shot each
+# Timeout: 4 hr per iteration
+# Threads: 1 thread
+# Benchmark mode: Single shot invocation time
+# Benchmark: com.eaybars.benchmark.query.ReviewsBetweenSQL.query
+
+# Run progress: 0.00% complete, ETA 00:00:00
+# Fork: N/A, test runs in the host VM
+# *** WARNING: Non-forked runs may silently omit JVM options, mess up profilers, disable compiler hints, etc. ***
+# *** WARNING: Use non-forked runs only for debugging purposes, not for actual performance runs. ***
+Iteration   1: 0.636 s/op
+Iteration   2: 0.580 s/op
+Iteration   3: 0.464 s/op
+Iteration   4: 0.450 s/op
+Iteration   5: 0.499 s/op
+
+Result "com.eaybars.benchmark.query.ReviewsBetweenSQL.query":
+  N = 5
+  mean =      0.526 ?(99.9%) 0.306 s/op
+
+  Histogram, s/op:
+    [0.400, 0.425) = 0
+    [0.425, 0.450) = 0
+    [0.450, 0.475) = 2
+    [0.475, 0.500) = 1
+    [0.500, 0.525) = 0
+    [0.525, 0.550) = 0
+    [0.550, 0.575) = 0
+    [0.575, 0.600) = 1
+    [0.600, 0.625) = 0
+    [0.625, 0.650) = 1
+    [0.650, 0.675) = 0
+    [0.675, 0.700) = 0
+
+  Percentiles, s/op:
+      p(0.0000) =      0.450 s/op
+     p(50.0000) =      0.499 s/op
+     p(90.0000) =      0.636 s/op
+     p(95.0000) =      0.636 s/op
+     p(99.0000) =      0.636 s/op
+     p(99.9000) =      0.636 s/op
+     p(99.9900) =      0.636 s/op
+     p(99.9990) =      0.636 s/op
+     p(99.9999) =      0.636 s/op
+    p(100.0000) =      0.636 s/op
+
+
+# Run complete. Total time: 00:00:02
+
+Benchmark                Mode  Cnt  Score   Error  Units
+ReviewsBetweenSQL.query    ss    5  0.526 ? 0.306   s/op
