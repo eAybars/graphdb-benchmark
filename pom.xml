@@ -14,7 +14,6 @@
         <module>tinker</module>
         <module>neo4j</module>
         <module>postgres</module>
-        <module>mongodb</module>
     </modules>
     <packaging>pom</packaging>
 

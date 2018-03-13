@@ -6,6 +6,7 @@ import com.eaybars.benchmark.insert.product.ProductInsertSQLBenchmark;
 import com.eaybars.benchmark.insert.product.RelatedProductsInsertSQLBenchmark;
 import com.eaybars.benchmark.insert.review.ReviewInsertSQLBenchmark;
 import com.eaybars.benchmark.query.CategoriesAUserLikesSQL;
+import com.eaybars.benchmark.query.PeopleAUserIsAlikeSQL;
 import com.eaybars.benchmark.query.ReviewsBetweenSQL;
 
 import static com.eaybars.benchmark.Arguments.ARGUMENTS;
@@ -26,6 +27,8 @@ public class Executor {
                 .ifPresent(BenchmarkRunnerConsumer.forBenchmark(ReviewsBetweenSQL.class));
         ARGUMENTS.queryBenchmarkFromArguments("caul")
                 .ifPresent(BenchmarkRunnerConsumer.forBenchmark(CategoriesAUserLikesSQL.class));
+        ARGUMENTS.queryBenchmarkFromArguments("pauia")
+                .ifPresent(BenchmarkRunnerConsumer.forBenchmark(PeopleAUserIsAlikeSQL.class));
 
         System.out.println();
         System.out.println("Benchmark results: ");
