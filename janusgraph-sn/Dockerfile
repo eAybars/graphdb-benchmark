@@ -9,8 +9,10 @@ RUN curl -Lo /opt/janusgraph.zip https://github.com/JanusGraph/janusgraph/releas
     rm /opt/janusgraph.zip && \
     mv /opt/janusgraph-"$JANUS_VERSION"-hadoop2 /opt/janusgraph
 
+ADD start-janus.sh /opt/janusgraph/bin/
+
 RUN chmod -R 777 /opt/janusgraph/
 
 USER jboss
 
-ENTRYPOINT ["/opt/janusgraph/bin/gremlin-server.sh"]
+ENTRYPOINT ["/opt/janusgraph/bin/start-janus.sh"]
