@@ -7,7 +7,7 @@
 # Timeout: 4 hr per iteration
 # Threads: 1 thread
 # Benchmark mode: Single shot invocation time
-# Benchmark: com.eaybars.benchmark.query.simple.ReviewsBetween.query
+# Benchmark: com.eaybars.benchmark.query.ReviewsBetween.query
 
 # Run progress: 0.00% complete, ETA 00:00:00
 # Fork: N/A, test runs in the host VM
@@ -19,7 +19,7 @@ Iteration   3: 92.628 s/op
 Iteration   4: 92.541 s/op
 Iteration   5: 92.198 s/op
 
-Result "com.eaybars.benchmark.query.simple.ReviewsBetween.query":
+Result "com.eaybars.benchmark.query.ReviewsBetween.query":
   N = 5
   mean =     92.340 ?(99.9%) 4.572 s/op
 

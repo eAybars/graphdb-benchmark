@@ -1,4 +1,4 @@
-package com.eaybars.benchmark.query.simple;
+package com.eaybars.benchmark.query;
 
 import com.eaybars.benchmark.GraphSupplier;
 import com.eaybars.benchmark.Information;

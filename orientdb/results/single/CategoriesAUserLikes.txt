@@ -7,7 +7,7 @@
 # Timeout: 4 hr per iteration
 # Threads: 1 thread
 # Benchmark mode: Single shot invocation time
-# Benchmark: com.eaybars.benchmark.query.simple.CategoriesAUserLikes.query
+# Benchmark: com.eaybars.benchmark.query.CategoriesAUserLikes.query
 
 # Run progress: 0.00% complete, ETA 00:00:00
 # Fork: N/A, test runs in the host VM
@@ -19,7 +19,7 @@ Iteration   3: 0.014 s/op
 Iteration   4: 0.015 s/op
 Iteration   5: 0.013 s/op
 
-Result "com.eaybars.benchmark.query.simple.CategoriesAUserLikes.query":
+Result "com.eaybars.benchmark.query.CategoriesAUserLikes.query":
   N = 5
   mean =      0.111 ?(99.9%) 0.836 s/op
 

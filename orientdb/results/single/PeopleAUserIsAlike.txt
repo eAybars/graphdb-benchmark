@@ -7,7 +7,7 @@
 # Timeout: 4 hr per iteration
 # Threads: 1 thread
 # Benchmark mode: Single shot invocation time
-# Benchmark: com.eaybars.benchmark.query.simple.PeopleAUserIsAlike.query
+# Benchmark: com.eaybars.benchmark.query.PeopleAUserIsAlike.query
 
 # Run progress: 0.00% complete, ETA 00:00:00
 # Fork: N/A, test runs in the host VM
@@ -19,7 +19,7 @@ Iteration   3: 2.553 s/op
 Iteration   4: 1.382 s/op
 Iteration   5: 2.979 s/op
 
-Result "com.eaybars.benchmark.query.simple.PeopleAUserIsAlike.query":
+Result "com.eaybars.benchmark.query.PeopleAUserIsAlike.query":
   N = 5
   mean =      3.002 ?(99.9%) 5.952 s/op
 

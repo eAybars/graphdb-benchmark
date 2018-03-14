@@ -7,7 +7,7 @@
 # Timeout: 4 hr per iteration
 # Threads: 1 thread
 # Benchmark mode: Single shot invocation time
-# Benchmark: com.eaybars.benchmark.query.simple.ReviewsBetween.query
+# Benchmark: com.eaybars.benchmark.query.ReviewsBetween.query
 
 # Run progress: 0.00% complete, ETA 00:00:00
 # Fork: N/A, test runs in the host VM
@@ -34,7 +34,7 @@ java.lang.UnsupportedOperationException: Predicate and(gte(1390521600), lt(13931
 	at org.apache.tinkerpop.gremlin.process.traversal.step.util.AbstractStep.next(AbstractStep.java:38)
 	at org.apache.tinkerpop.gremlin.process.traversal.Traversal.fill(Traversal.java:179)
 	at org.apache.tinkerpop.gremlin.process.traversal.Traversal.toList(Traversal.java:117)
-	at com.eaybars.benchmark.query.simple.ReviewsBetween.query(ReviewsBetween.java:31)
+	at com.eaybars.benchmark.query.ReviewsBetween.query(ReviewsBetween.java:31)
 	at com.eaybars.benchmark.query.simple.generated.ReviewsBetween_query_jmhTest.query_ss_jmhStub(ReviewsBetween_query_jmhTest.java:446)
 	at com.eaybars.benchmark.query.simple.generated.ReviewsBetween_query_jmhTest.query_SingleShotTime(ReviewsBetween_query_jmhTest.java:397)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)

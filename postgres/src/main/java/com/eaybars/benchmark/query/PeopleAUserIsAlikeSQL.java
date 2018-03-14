@@ -32,7 +32,7 @@ public class PeopleAUserIsAlikeSQL {
                 "WHERE pe.reviewer_id = ?) as myProducts " +
             "INNER JOIN review rw ON rw.product_id = myProducts.pid " +
             "INNER JOIN person u ON u.reviewer_id = rw.reviewer_id AND u.reviewer_id <> ? " +
-            "GROUP u.reviewer_id " +
+            "GROUP BY u.reviewer_id " +
             "ORDER BY COUNT (myProducts.pid) DESC";
 
 

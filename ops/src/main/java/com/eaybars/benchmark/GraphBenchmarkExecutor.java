@@ -4,9 +4,9 @@ import com.eaybars.benchmark.insert.product.CategoryInsertBenchmark;
 import com.eaybars.benchmark.insert.product.ProductInsertBenchmark;
 import com.eaybars.benchmark.insert.product.RelatedProductsInsertBenchmark;
 import com.eaybars.benchmark.insert.review.ReviewInsertBenchmark;
-import com.eaybars.benchmark.query.simple.CategoriesAUserLikes;
-import com.eaybars.benchmark.query.simple.PeopleAUserIsAlike;
-import com.eaybars.benchmark.query.simple.ReviewsBetween;
+import com.eaybars.benchmark.query.CategoriesAUserLikes;
+import com.eaybars.benchmark.query.PeopleAUserIsAlike;
+import com.eaybars.benchmark.query.ReviewsBetween;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 
 import java.util.function.Supplier;
