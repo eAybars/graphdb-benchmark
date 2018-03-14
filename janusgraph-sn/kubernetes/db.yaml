@@ -22,6 +22,7 @@ spec:
       containers:
         - name: elasticsearch
           image: quay.io/pires/docker-elasticsearch-kubernetes:6.1.2
+          imagePullPolicy: IfNotPresent
           env:
           - name: NAMESPACE
             valueFrom:
@@ -96,6 +97,7 @@ spec:
               mountPath: /var/lib/cassandra/data
         - name: janus-server
           image: eaybars/janus-server
+          imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8182
             name: gremlin
