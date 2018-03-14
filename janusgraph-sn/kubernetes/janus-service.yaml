@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: janus-server
+  name: janus-server
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8182
+      name: gremlin
+      port: 9300
+    - name: transport
+      protocol: TCP
+      port: 9200
+    - name: http
+  selector:
+    app: janus-server

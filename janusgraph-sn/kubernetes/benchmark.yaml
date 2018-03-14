@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: janusgraph-sn-benchmark
+  labels:
+    app: janusgraph-sn-benchmark
+spec:
+  template:
+    metadata:
+      labels:
+        app: janusgraph-sn-benchmark
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: janusgraph-sn-benchmark
+        image: eaybars/janusgraph-sn-benchmark
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: JMH_FORK
+            value: "0"
+          - name: BENCHMARK_RESULT_DIR
+            value: "/tmp/"
+          - name: JAVA_OPTIONS
+            value: "-Xms512m -Xmx512m"
+        args:
+          - "-insert.product.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.product.commit=1"
+          - "-insert.product.count=433000"
+          - "-insert.product.measurementBatch=1000"
+          - "-insert.relatedProduct.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.relatedProduct.commit=1"
+          - "-insert.relatedProduct.count=433000"
+          - "-insert.relatedProduct.measurementBatch=1000"
+          - "-insert.productCategory.file=/opt/graphdb-benchmark/meta_Kindle_Store.json.gz"
+          - "-insert.productCategory.commit=10"
+          - "-insert.productCategory.count=433000"
+          - "-insert.productCategory.measurementBatch=1000"
+          - "-insert.review.file=/opt/graphdb-benchmark/reviews_Kindle_Store_5.json.gz"
+          - "-insert.review.commit=20"
+          - "-insert.review.count=982000"
+          - "-insert.review.measurementBatch=1000"
+          - "-query.rb=5"
+          - "-query.caul=5"
+          - "-query.pauia=5"
+
