@@ -32,7 +32,7 @@ wait_for_cassandra() {
 wait_for_elasticsearch() {
     wait_for_startup "Elasticsearch" 127.0.0.1 9200 $ELASTICSEARCH_STARTUP_TIMEOUT_S || {
         echo "Elasticsearch is unavailable. Check Elasticsearch log output."  >&2
-        return 1
+        exit 1
     }
 }
 
@@ -53,14 +53,19 @@ wait_for_startup() {
         $BIN/checksocket.sh $host $port >/dev/null 2>&1
         if [ $? -eq 0 ]; then
             echo " OK (connected to $host:$port)."
-            return 0
         fi
         sleep $SLEEP_INTERVAL_S
         now_s=`date '+%s'`
     done
 
     echo " timeout exceeded ($timeout_s seconds): could not connect to $host:$port" >&2
-    return 1
+    exit 1
 }
 
-wait_for_cassandra && wait_for_elasticsearch && exec /opt/janusgraph/bin/gremlin-server.sh
+
+wait_for_cassandra
+
+if [ $ELASTICSEARCH_STARTUP_TIMEOUT_S -ne 0 ]; then
+    wait_for_elasticsearch
+
+exec /opt/janusgraph/bin/gremlin-server.sh
