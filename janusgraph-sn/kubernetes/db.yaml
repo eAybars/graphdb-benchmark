@@ -34,6 +34,8 @@ spec:
                 fieldPath: metadata.name
           - name: DISCOVERY_SERVICE
             value: "janus-server"
+          - name: NETWORK_HOST
+            value: "_local_"
           - name: CLUSTER_NAME
             value: janus
           - name: NUMBER_OF_MASTERS

@@ -53,6 +53,7 @@ wait_for_startup() {
         $BIN/checksocket.sh $host $port >/dev/null 2>&1
         if [ $? -eq 0 ]; then
             echo " OK (connected to $host:$port)."
+            return;
         fi
         sleep $SLEEP_INTERVAL_S
         now_s=`date '+%s'`
