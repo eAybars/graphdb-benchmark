@@ -67,5 +67,6 @@ wait_for_cassandra
 
 if [ $ELASTICSEARCH_STARTUP_TIMEOUT_S -ne 0 ]; then
     wait_for_elasticsearch
+fi
 
 exec /opt/janusgraph/bin/gremlin-server.sh
