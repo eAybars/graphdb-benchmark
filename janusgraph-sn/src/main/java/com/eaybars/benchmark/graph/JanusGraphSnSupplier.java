@@ -18,7 +18,7 @@ public class JanusGraphSnSupplier implements Supplier<GraphTraversalSource> {
 
     static {
         try {
-            conf = new PropertiesConfiguration(JanusGraphSnSupplier.class.getClassLoader().getResource(""));
+            conf = new PropertiesConfiguration(JanusGraphSnSupplier.class.getClassLoader().getResource("jgex-remote.properties"));
             YamlConfiguration yc = new YamlConfiguration();
             yc.load(JanusGraphSnSupplier.class.getClassLoader().getResource("remote-objects.yaml"));
             Cluster cluster = Cluster.open(yc);

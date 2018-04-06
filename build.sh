@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 APP_NAME="${1:?Need to set APP_NAME parameter (1th argument) to a non-empty value}"
 
 case $APP_NAME in
-    janusgraph|orientDb|tinker|neo4j|postgres)
+    janusgraph|janusgraph-sn|orientDb|tinker|neo4j|postgres)
         echo "Building $APP_NAME"
     ;;
     *)
